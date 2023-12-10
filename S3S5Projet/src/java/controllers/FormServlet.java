@@ -41,7 +41,7 @@ public class FormServlet extends HttpServlet {
             model.setError(request.getParameter("error"));
             request.setAttribute("viewName", "components/form.jsp");
             request.setAttribute("model", model);
-            RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
+            RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
         }
     }

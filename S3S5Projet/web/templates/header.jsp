@@ -23,10 +23,10 @@
                 </ul>
             </li>
             <li>
-                <a href="#">About</a>
+                <a href="HomeServlet">Listes</a>
             </li>
             <li>
-                <a href="#">Portfolio</a>
+                <a href="CheckServlet">Formulaire</a>
             </li>
             <li>
                 <a href="#">Contact</a>

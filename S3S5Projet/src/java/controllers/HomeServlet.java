@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.ViewModel;
 
 /**
  *
@@ -34,8 +35,13 @@ public class HomeServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            ViewModel model = new ViewModel();
+            model.genres.add("Homme");
+            model.genres.add("Femme");
+            model.setError(request.getParameter("error"));
+            request.setAttribute("model", model);
             request.setAttribute("viewName", "components/liste.jsp");
-            RequestDispatcher dispatch = request.getRequestDispatcher("index.jsp");
+            RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
         }
     }
