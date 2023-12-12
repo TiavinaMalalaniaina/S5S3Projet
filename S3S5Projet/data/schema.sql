@@ -21,3 +21,9 @@ CREATE  TABLE "public".materiel_type (
 	CONSTRAINT fk_materiel_type_meuble_type FOREIGN KEY ( meuble_type_id ) REFERENCES "public".meuble_type( id )   
  );
 
+CREATE OR REPLACE VIEW "public".v_meuble_materiaux AS 
+SELECT m.*, ma.nom nom_materiel, mt.nom nom_meuble_type
+FROM materiel_type m
+JOIN materiel ma ON m.materiel_id=ma.id 
+JOIN meuble_type mt ON m.meuble_type_id=mt.id;
+
