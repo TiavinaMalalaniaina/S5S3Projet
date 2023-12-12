@@ -9,6 +9,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import meuble.Materiel;
 
 /**
  *
@@ -17,7 +18,7 @@ import java.util.Locale;
 public class ViewModel {
     public final static String URLCONTEXT = "http://localhost:8080/S3S5Projet/";
     
-    public List<String> genres = new ArrayList<>();
+    public List<Materiel> materiels = new ArrayList<>();
     String error;
     
     public String getError() {
