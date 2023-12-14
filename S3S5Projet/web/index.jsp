@@ -1,0 +1,1 @@
+<% response.sendRedirect("ListTypeServlet?style=0");     %>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package meuble;
+package models;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -74,15 +74,16 @@ public class Materiel {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "SELECT * FROM v_meuble_materiaux where meuble_type_id = ?";
+        String sql = "SELECT * FROM v_style_materiel where style_id = ?";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
+            System.out.println(stmt.toString());
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Materiel model = new Materiel();
                 model.setId(rs.getInt("materiel_id"));   // int
-                model.setNom(rs.getString("nom_materiel"));  // String
+                model.setNom(rs.getString("materiel_nom"));  // String
                 models.add(model);
             }
         } finally {

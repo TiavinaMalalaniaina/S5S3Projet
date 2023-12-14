@@ -14,13 +14,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import meuble.Materiel;
+import models.Materiel;
 
 /**
  *
  * @author itu
  */
-@WebServlet(name = "SaveMaterielServlet", urlPatterns = {"/SaveMaterielServlet"})
+@WebServlet(name = "SaveMaterielServlet", urlPatterns = {"/SaveMateriel"})
 public class SaveMaterielServlet extends HttpServlet {
 
     /**
@@ -46,6 +46,7 @@ public class SaveMaterielServlet extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(SaveMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        response.sendRedirect("FormMaterielServlet");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

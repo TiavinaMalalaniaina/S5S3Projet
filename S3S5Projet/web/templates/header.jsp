@@ -9,18 +9,21 @@
         <h1><a href="index.html" class="logo">Aria</a></h1>
         <ul class="list-unstyled components mb-5">
             <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Style</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li>
-                        <a href="#">Home 1</a>
+                        <a href="FormMateriel">Ajout de materiel</a>
                     </li>
                     <li>
-                        <a href="#">Home 2</a>
+                        <a href="FormType">Ajout de style</a>
                     </li>
                     <li>
-                        <a href="#">Home 3</a>
+                        <a href="ListType?style=0">Liste</a>
                     </li>
                 </ul>
+            </li>
+            <li>
+                <a href="HomeServlet">Listes</a>
             </li>
             <li>
                 <a href="HomeServlet">Listes</a>

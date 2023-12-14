@@ -17,24 +17,24 @@ import java.util.Properties;
  * @author tiavi
  */
 public class DBConnection {
-    private String URL = "jdbc:postgresql://localhost:5432/fifidianana";
+    private String URL = "jdbc:postgresql://localhost:5432/meuble";
     private String USER = "postgres";
-    private String PASSWORD = "malalaniaina";
+    private String PASSWORD = "mickey";
     private String DRIVER = "org.postgresql.Driver";
     private Connection connection = null;
     
     
     
     private DBConnection(String propertiesFile) throws SQLException {
-        Properties properties = new Properties();
-        try (FileInputStream input = new FileInputStream(propertiesFile)) {
-            properties.load(input);
-        } catch (IOException e) {
-        }
-        URL = properties.getProperty("database.url");
-        USER = properties.getProperty("database.user");
-        PASSWORD = properties.getProperty("database.password");
-        DRIVER = properties.getProperty("database.driver");
+//        Properties properties = new Properties();
+//        try (FileInputStream input = new FileInputStream(propertiesFile)) {
+//            properties.load(input);
+//        } catch (IOException e) {
+//        }
+//        URL = properties.getProperty("database.url");
+//        USER = properties.getProperty("database.user");
+//        PASSWORD = properties.getProperty("database.password");
+//        DRIVER = properties.getProperty("database.driver");
         setting();
     }
     

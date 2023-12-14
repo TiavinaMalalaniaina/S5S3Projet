@@ -6,23 +6,29 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import meuble.MaterielType;
-import meuble.MeubleType;
+import models.Materiel;
+import models.Style;
+import models.ViewModel;
+import util.DBConnection;
 
 /**
  *
  * @author tiavi
  */
-@WebServlet(name = "FormMaterielServlet", urlPatterns = {"/FormMaterielServlet"})
-public class SaveTypeServlet extends HttpServlet {
+@WebServlet(name = "ListTypeServlet", urlPatterns = {"/ListType"})
+public class ListTypeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,30 +40,34 @@ public class SaveTypeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            response.setContentType("text/html;charset=UTF-8");
-            
-            String nom = request.getParameter("nom");
-            String[] id = request.getParameterValues("materielId");
-            
-            
-            MeubleType meubleType = new MeubleType();
-            meubleType.setNom(nom);
-            meubleType.save(null);
-            MaterielType materielType = new MaterielType();
-            
-            materielType.setId_meubleType(meubleType.getId());
-            
-            
-            for(String indice : id){
-                materielType.setId_materiel(indice);     
-                materielType.save(null);
+            throws ServletException, IOException, SQLException {
+        response.setContentType("text/html;charset=UTF-8");
+        Connection connection = null;
+         try {
+            connection = DBConnection.getConnection();
+            String style = request.getParameter("style");
+            int id = Integer.parseInt(style);
+            List<Materiel> materiel = Materiel.findByType(connection, id);
+            try (PrintWriter out = response.getWriter()) {
+
+
+
+                ViewModel model = new ViewModel();
+
+                model.materiels = materiel;
+                model.meubleType = Style.findAll(connection);
+
+                model.setError(request.getParameter("error"));
+                request.setAttribute("viewName", "components/listeMateriel.jsp");
+                request.setAttribute("model", model);
+                RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+                dispatch.forward(request, response);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(SaveTypeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ListTypeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+             connection.close();
         }
-      
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -72,7 +82,11 @@ public class SaveTypeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListTypeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -86,7 +100,11 @@ public class SaveTypeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListTypeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

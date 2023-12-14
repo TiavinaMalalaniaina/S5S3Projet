@@ -7,20 +7,24 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Materiel;
 import models.ViewModel;
 
 /**
  *
  * @author tiavi
  */
-@WebServlet(name = "FormMaterielServlet", urlPatterns = {"/FormMateriel"})
-public class FormMaterielServlet extends HttpServlet {
+@WebServlet(name = "FormTypeServlet", urlPatterns = {"/FormStyle"})
+public class FormStyleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,14 +38,27 @@ public class FormMaterielServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+         try {
+              List<Materiel> materiel;
         try (PrintWriter out = response.getWriter()) {
+            
+                materiel = Materiel.findAll(null);            
+      
+
             ViewModel model = new ViewModel();
+            
+            model.materiels = materiel;
+           
             model.setError(request.getParameter("error"));
-            request.setAttribute("viewName", "components/formMateriel.jsp");
+            request.setAttribute("viewName", "components/formStyle.jsp");
             request.setAttribute("model", model);
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
         }
+            } catch (Exception ex) {
+                Logger.getLogger(FormStyleServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         response.sendRedirect("/FormTypeServlet");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

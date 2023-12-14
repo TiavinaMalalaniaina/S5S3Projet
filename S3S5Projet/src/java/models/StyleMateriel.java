@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package meuble;
+package models;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,25 +12,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.List;
 import util.DBConnection;
 
 /**
  *
  * @author itu
  */
-public class MeubleType {
+public class StyleMateriel {
     int id;
-    String nom;
-    List<Materiel> materiaux;
+    int idStyle;
+    int idMateriel;
 
-    public MeubleType(int id, String nom, List<Materiel> materiaux) {
-        this.id = id;
-        this.nom = nom;
-        this.materiaux = materiaux;
+    public StyleMateriel() {
     }
 
-    public MeubleType() {
+    public StyleMateriel(int id, int idMeubleType, int idMateriel) {
+        this.id = id;
+        this.idStyle = idMeubleType;
+        this.idMateriel = idMateriel;
     }
 
     public int getId() {
@@ -41,20 +40,25 @@ public class MeubleType {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public int getIdStyle() {
+        return idStyle;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setIdStyle(int id_meubleType) {
+        this.idStyle = id_meubleType;
     }
 
-    public List<Materiel> getMateriaux() {
-        return materiaux;
+    public int getIdMateriel() {
+        return idMateriel;
     }
 
-    public void setMateriaux(List<Materiel> materiaux) {
-        this.materiaux = materiaux;
+    public void setIdMateriel(int idMateriel) {
+        this.idMateriel = idMateriel;
+    }
+    
+     public void setIdMateriel(String nomMateriel){
+         int idMateriel = Integer.parseInt(nomMateriel);
+         this.setIdMateriel(idMateriel);
     }
     
      public void save(Connection connection) throws SQLException {
@@ -63,11 +67,11 @@ public class MeubleType {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "INSERT INTO \"public\".meuble_type (id, nom) VALUES (default,?) RETURNING id";
+        String sql = "INSERT INTO \"public\".style_materiel (id,style_id, materiel_id) VALUES (default,?,?) RETURNING id";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, this.getNom());
-            
+            stmt.setInt(1, this.getIdStyle());
+            stmt.setInt(2, this.getIdMateriel());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) this.setId(rs.getInt("id"));
         } finally {

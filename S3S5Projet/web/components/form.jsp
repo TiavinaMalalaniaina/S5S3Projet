@@ -15,15 +15,7 @@
         <input type="text" class="form-control" id="nom" name="nom" placeholder="Entrez le nom">
     </div>
     
-    <!-- Champ Genre -->
-    <div class="form-group">
-        <label for="nom">Genre:</label>
-        <select id="genre" name="genre" class="form-control">
-            <% for (String genre : model.genres) { %>
-                <option value="<%= genre %>"><%= genre %></option>
-            <% } %>
-        </select>
-    </div>
+
     
     <!-- Champ Date de Naissance -->
     <div class="form-group">

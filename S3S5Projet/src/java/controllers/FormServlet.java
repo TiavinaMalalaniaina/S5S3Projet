@@ -36,8 +36,7 @@ public class FormServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             ViewModel model = new ViewModel();
-            model.genres.add("Homme");
-            model.genres.add("Femme");
+       
             model.setError(request.getParameter("error"));
             request.setAttribute("viewName", "components/form.jsp");
             request.setAttribute("model", model);

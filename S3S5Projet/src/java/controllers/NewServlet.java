@@ -7,24 +7,16 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import meuble.Materiel;
-import models.ViewModel;
 
 /**
  *
- * @author tiavi
+ * @author itu
  */
-@WebServlet(name = "FormTypeServlet", urlPatterns = {"/FormTypeServlet"})
-public class FormTypeServlet extends HttpServlet {
+public class NewServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,26 +30,18 @@ public class FormTypeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         try {
-              List<Materiel> materiel;
         try (PrintWriter out = response.getWriter()) {
-            
-                materiel = Materiel.findAll(null);            
-      
-
-            ViewModel model = new ViewModel();
-            
-            model.materiels = materiel;
-           
-            model.setError(request.getParameter("error"));
-            request.setAttribute("viewName", "components/formStyle.jsp");
-            request.setAttribute("model", model);
-            RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
-            dispatch.forward(request, response);
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet NewServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-            } catch (Exception ex) {
-                Logger.getLogger(FormTypeServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
