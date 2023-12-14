@@ -4,18 +4,22 @@
     ViewModel model = (ViewModel) request.getAttribute("model");
 %>
 
-<form method="POST" action="SaveTypeServlet">
+<form method="POST" action="SaveStyle">
         <div class="form-group">
         <label for="nom">Style:</label>
         <input type="text" class="form-control" id="nom" name="nom" placeholder="Entrez vos choix">
     </div>
+    <div class="form-group">
+        <label for="id_label_multiple">
+          Click this to highlight the multiple select element
+        </label>
+        <select name="materielId" class="js-example-basic-multiple js-states form-control" id="id_label_multiple" multiple="multiple">
     <% for(Materiel materiel : model.materiels){ %>
-      <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="bois" name="materielId" value="<%= materiel.getId() %>">
-        <label class="form-check-label"  for="marie"><%= materiel.getNom() %></label>
+        <option value="<%= materiel.getId()%>"><%= materiel.getNom() %></option>
+   <% } %>
+      </select>
     </div>
    
-   <% } %>
   
     <input type="submit" value="Valider">
 </form>

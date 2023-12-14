@@ -54,7 +54,7 @@ public class SaveStyleServlet extends HttpServlet {
                 materielType.setIdMateriel(indice);     
                 materielType.save(null);
             }
-            response.sendRedirect("FormStyleServlet");
+                response.sendRedirect("FormStyle");
 
         } catch (SQLException ex) {
             Logger.getLogger(SaveStyleServlet.class.getName()).log(Level.SEVERE, null, ex);

@@ -5,7 +5,7 @@
     ViewModel model = (ViewModel) request.getAttribute("model");
 %>
 
-<form method="GET" action="ListTypeServlet">
+<form method="GET" action="ListType">
     <div class="form-group">
         <label for="id_label_single">Select avec recherche</label>
         <select name="style" class="js-example-basic-single form-control" id="id_label_single">

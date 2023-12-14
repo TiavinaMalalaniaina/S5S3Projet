@@ -15,7 +15,7 @@
                         <a href="FormMateriel">Ajout de materiel</a>
                     </li>
                     <li>
-                        <a href="FormType">Ajout de style</a>
+                        <a href="FormStyle">Ajout de style</a>
                     </li>
                     <li>
                         <a href="ListType?style=0">Liste</a>
