@@ -17,9 +17,9 @@ import java.util.Properties;
  * @author tiavi
  */
 public class DBConnection {
-    private String URL = "jdbc:postgresql://localhost:5432/meuble";
-    private String USER = "furniture";
-    private String PASSWORD = "furniture";
+    private String URL = "jdbc:postgresql://172.20.3.244/meuble";
+    private String USER = "postgres";
+    private String PASSWORD = "malalaniaina";
     private String DRIVER = "org.postgresql.Driver";
     private Connection connection = null;
     

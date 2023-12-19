@@ -3,24 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controllers;
+package models;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Meuble;
 
 /**
  *
  * @author itu
  */
-@WebServlet(name = "SaveMeubleServlet", urlPatterns = {"/SaveMeuble"})
-public class SaveMeubleServlet extends HttpServlet {
+@WebServlet(name = "ListMeubleServlet", urlPatterns = {"/ListMeubleServlet"})
+public class ListMeubleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,18 +36,27 @@ public class SaveMeubleServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         
-        int styleId = Integer.parseInt(request.getParameter("style"));
-        int categorieId = Integer.parseInt(request.getParameter("categorie"));
-        
-        try {
-            response.sendRedirect("FormMateriel");
-            Meuble meuble = new Meuble(styleId,categorieId);
-            meuble.save(null);
-            
-        } catch (Exception ex) {
-            Logger.getLogger(SaveMeubleServlet.class.getName()).log(Level.SEVERE, null, ex);
-            response.sendRedirect("FormMateriel?error=" + ex.getMessage());
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+          int style = Integer.parseInt(request.getParameter("materiel"));
+          List<Meuble> meubles;
+            try {
+                meubles = Meuble.findByMateriel(null, style);
+                  ViewModel model = new ViewModel();
+                 model.meubles = meubles;
+                 
+            model.setError(request.getParameter("error"));
+            request.setAttribute("viewName", "components/listeMeuble.jsp");
+            request.setAttribute("title", "MATERIEL");
+            request.setAttribute("viewTitle", "Materiel pour meuble");
+            request.setAttribute("model", model);
+            RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+            dispatch.forward(request, response);
+            } catch (Exception ex) {
+                Logger.getLogger(ListMeubleServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
+          
         }
     }
 

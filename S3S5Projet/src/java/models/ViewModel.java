@@ -19,6 +19,11 @@ public class ViewModel {
     
     public List<Materiel> materiels = new ArrayList<>();
     public List<Style> meubleType = new ArrayList<>();
+    public List<Categorie> categorie = new ArrayList<>();
+    public List<Style> style = new ArrayList<>();
+    public Meuble meuble = null;
+    public List<Meuble> meubles = new ArrayList<>();
+    
     
     String error;
     

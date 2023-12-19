@@ -7,17 +7,26 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Categorie;
+import models.Materiel;
+import models.Meuble;
+import models.Style;
+import models.ViewModel;
 
 /**
  *
  * @author tiavi
  */
-@WebServlet(name = "FormMeubleServlet", urlPatterns = {"/FormMeuble"})
+@WebServlet(name = "FormMeubleMaterielServlet", urlPatterns = {"/FormMeubleMateriel"})
 public class FormMeubleMaterielServlet extends HttpServlet {
 
     /**
@@ -33,10 +42,26 @@ public class FormMeubleMaterielServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            int meubleId = Integer.parseInt(request.getParameter("meuble"));
-            int materielId = Integer.parseInt(request.getParameter("materiel"));
-            double petit = Double.parseDouble(request.getParameter("petit"));
-            double grand = Double.parseDouble(request.getParameter("grand"));
+           int meubleId = Integer.parseInt(request.getParameter("meuble"));
+             try {
+                 Meuble meuble = Meuble.findById(null, meubleId);
+                 List<Materiel> materiels = Materiel.findByType(null, meuble.getStyleId());
+                 ViewModel model = new ViewModel();
+                 model.meuble = meuble;
+                 model.materiels = materiels;
+                 
+                model.setError(request.getParameter("error"));
+                request.setAttribute("viewName", "components/formMeubleMateriel.jsp");
+                request.setAttribute("title", "MATERIEL");
+                request.setAttribute("viewTitle", "Materiel pour meuble");
+                request.setAttribute("model", model);
+                RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+                dispatch.forward(request, response);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Logger.getLogger(FormMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             
         }
     }

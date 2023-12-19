@@ -33,6 +33,11 @@ public class Meuble {
     String styleNom;
     String categorieNom;
     String volume;
+
+    public Meuble(int styleId, int categorieId) {
+        this.styleId = styleId;
+        this.categorieId = categorieId;
+    }
     
     public Meuble(int id, int styleId, int categorieId, List<Materiel> materiel, String styleNom, String categorieNom) {
         this.id = id;
@@ -108,7 +113,7 @@ public class Meuble {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "INSERT INTO \"public\".meuble (id,categorie_id,style_id,) VALUES (default,?,?) RETURNING id";
+        String sql = "INSERT INTO \"public\".meuble (id,categorie_id,style_id) VALUES (default,?,?) RETURNING id";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, this.getCategorieId());
@@ -161,7 +166,35 @@ public class Meuble {
     }
          
          
-      
+        public static Meuble findById(Connection connection, int id) throws SQLException, Exception {
+        Meuble model = new Meuble();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = DBConnection.getConnection();
+        }
+        String sql = "SELECT * FROM v_meuble WHERE id=?";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+       
+                 model.setId(rs.getInt("categorie_id"));   // int
+                model.setStyleId(rs.getInt("style_id"));  
+                model.setStyleNom(rs.getString("style_nom"));
+                model.setCategorieNom(rs.getString("categorie_nom"));
+            } else {
+                throw new SQLException("Model not found");
+            }
+        } finally {
+            if (!wasConnected) {
+                connection.close();
+            }
+        } 
+        return model;
+    }
+    
 
     }
     

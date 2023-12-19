@@ -22,8 +22,18 @@ public class MeubleMateriel {
     double petit;
     double grand;
 
+    public MeubleMateriel() {
+    }
+
     public double getPetit() {
         return petit;
+    }
+
+    public MeubleMateriel(int meubleId, int materielId, double petit, double grand) {
+        this.meubleId = meubleId;
+        this.materielId = materielId;
+        this.petit = petit;
+        this.grand = grand;
     }
 
     public void setPetit(double petit) {
@@ -80,7 +90,7 @@ public class MeubleMateriel {
             stmt.setInt(1, this.getMeubleId());
             stmt.setInt(2, this.getMaterielId());
             stmt.setDouble(3,this.getPetit());
-             stmt.setDouble(3,this.getGrand());
+             stmt.setDouble(4,this.getGrand());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) this.setId(rs.getInt("id"));
         } finally {

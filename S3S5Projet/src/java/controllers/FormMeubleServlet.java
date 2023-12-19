@@ -7,11 +7,18 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Categorie;
+import models.Style;
+import models.ViewModel;
 
 /**
  *
@@ -33,7 +40,27 @@ public class FormMeubleServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
+            try {
+                List<Categorie> categories = Categorie.findAll(null);
+                List<Style> styles = Style.findAll(null);
+                 ViewModel model = new ViewModel();
+                 model.style = styles;
+                 model.categorie = categories;
+                 
+            model.setError(request.getParameter("error"));
+            request.setAttribute("viewName", "components/formMeuble.jsp");
+            request.setAttribute("title", "MATERIEL");
+            request.setAttribute("viewTitle", "Formulaire de meuble");
+            request.setAttribute("model", model);
+            RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+            dispatch.forward(request, response);
+            } catch (Exception ex) {
+                Logger.getLogger(FormMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+             
+           
+
         }
     }
 
