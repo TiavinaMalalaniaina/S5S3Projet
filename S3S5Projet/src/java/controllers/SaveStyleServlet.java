@@ -41,7 +41,6 @@ public class SaveStyleServlet extends HttpServlet {
             String nom = request.getParameter("nom");
             String[] id = request.getParameterValues("materielId");
             
-            
             Style meubleType = new Style();
             meubleType.setNom(nom);
             meubleType.save(null);
@@ -54,10 +53,11 @@ public class SaveStyleServlet extends HttpServlet {
                 materielType.setIdMateriel(indice);     
                 materielType.save(null);
             }
-                response.sendRedirect("FormStyle");
+            response.sendRedirect("FormStyle");
 
         } catch (SQLException ex) {
             Logger.getLogger(SaveStyleServlet.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect("FormStyle?error=" + ex.getMessage());
         }
       
     }

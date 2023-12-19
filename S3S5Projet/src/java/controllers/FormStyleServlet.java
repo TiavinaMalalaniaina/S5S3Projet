@@ -51,6 +51,8 @@ public class FormStyleServlet extends HttpServlet {
            
             model.setError(request.getParameter("error"));
             request.setAttribute("viewName", "components/formStyle.jsp");
+            request.setAttribute("title", "STYLE");
+            request.setAttribute("viewTitle", "Formulaire de style");
             request.setAttribute("model", model);
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);

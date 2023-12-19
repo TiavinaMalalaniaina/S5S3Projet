@@ -59,6 +59,8 @@ public class ListTypeServlet extends HttpServlet {
 
                 model.setError(request.getParameter("error"));
                 request.setAttribute("viewName", "components/listeMateriel.jsp");
+                request.setAttribute("viewTitle", "Listes des matériaux");
+                request.setAttribute("title", "STYLE");
                 request.setAttribute("model", model);
                 RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
                 dispatch.forward(request, response);

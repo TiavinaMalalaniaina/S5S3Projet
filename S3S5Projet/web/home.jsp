@@ -43,7 +43,7 @@
                 <div class="card mycard">
                     
                 <div class="card-body">
-                    <h5 class="card-title">Table des Employés</h5>
+                    <h5 class="card-title">${viewTitle}</h5>
                 <!-- Page Content  -->
                     
                     <c:import url="${viewName}" />

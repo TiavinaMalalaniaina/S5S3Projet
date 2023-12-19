@@ -6,12 +6,12 @@
 
 <form method="POST" action="SaveStyle">
         <div class="form-group">
-        <label for="nom">Style:</label>
-        <input type="text" class="form-control" id="nom" name="nom" placeholder="Entrez vos choix">
+        <label for="nom">Nom:</label>
+        <input type="text" class="form-control" id="nom" name="nom" placeholder="Saisissez le nom ...">
     </div>
     <div class="form-group">
         <label for="id_label_multiple">
-          Click this to highlight the multiple select element
+          Matériaux:
         </label>
         <select name="materielId" class="js-example-basic-multiple js-states form-control" id="id_label_multiple" multiple="multiple">
     <% for(Materiel materiel : model.materiels){ %>
@@ -21,5 +21,5 @@
     </div>
    
   
-    <input type="submit" value="Valider">
+      <input class="btn btn-primary" type="submit" value="Valider">
 </form>

@@ -1,7 +1,7 @@
 <form method="POST" action="SaveMateriel">
     <div class="form-group">
-        <label for="nom">Style:</label>
-        <input type="text" class="form-control" id="nom" name="nom" placeholder="Entrez vos choix">
+        <label for="nom">Nom:</label>
+        <input type="text" class="form-control" id="nom" name="nom" placeholder="Saisissez le nom...">
     </div>
-    <input type="submit" value="Valider">
+    <input class="btn btn-primary" type="submit" value="Valider">
  </form>

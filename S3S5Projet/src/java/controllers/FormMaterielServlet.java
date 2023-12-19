@@ -38,6 +38,8 @@ public class FormMaterielServlet extends HttpServlet {
             ViewModel model = new ViewModel();
             model.setError(request.getParameter("error"));
             request.setAttribute("viewName", "components/formMateriel.jsp");
+            request.setAttribute("title", "MATERIEL");
+            request.setAttribute("viewTitle", "Formulaire de matériel");
             request.setAttribute("model", model);
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);

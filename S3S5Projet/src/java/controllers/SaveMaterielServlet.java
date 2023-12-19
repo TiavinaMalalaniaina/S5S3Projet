@@ -43,10 +43,11 @@ public class SaveMaterielServlet extends HttpServlet {
         
         try {
             materiel.save(null);
+            response.sendRedirect("FormMateriel");
         } catch (SQLException ex) {
             Logger.getLogger(SaveMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect("FormMateriel?error=" + ex.getMessage());
         }
-        response.sendRedirect("FormMateriel");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
