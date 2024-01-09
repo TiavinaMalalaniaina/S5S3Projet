@@ -1,3 +1,4 @@
+<%@page import="models.Meuble"%>
 <%@page import="models.Materiel"%>
 <%@page import="models.Style"%>
 <%@page import="models.ViewModel"%>
@@ -5,10 +6,10 @@
     ViewModel model = (ViewModel) request.getAttribute("model");
 %>
 
-<form method="GET" action="ListType">
+<form method="GET" action="ListMeuble">
     <div class="form-group">
-        <select name="style" class="js-example-basic-single form-control" id="id_label_single">
-            <% for(Style materiel : model.meubleType){ %>
+        <select name="materielId" class="js-example-basic-single form-control" id="id_label_single">
+            <% for(Materiel materiel : model.materiels){ %>
              <option value="<%= materiel.getId() %>"><%= materiel.getNom() %></option>
             <%  } %> 
         </select>
@@ -18,16 +19,17 @@
 <table class="table">
     <thead>
     <tr>
-        <th>Référence</th>
-        <th>Désignation</th>
+        <th>Designation</th>
+        <th>Petit</th>
+        <th>Grand</th>
     </tr>
     </thead>
     <tbody>
-        <% for(Materiel materiel : model.materiels){ %>
+        <% for(Meuble meuble : model.meubles){ %>
          <tr>
-            <td><%= materiel.getId() %></td> 
-            <td><%= materiel.getNom() %></td>             
-
+            <td><%= meuble.getStyleNom() + " " + meuble.getCategorieNom() %></td> 
+            <td><%= meuble.getPetit() %></td> 
+            <td><%= meuble.getGrand() %></td> 
         </tr>
       <%  } %>
     </tbody>

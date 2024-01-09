@@ -15,12 +15,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Materiel;
+import models.MeubleMateriel;
 
 /**
  *
  * @author itu
  */
-@WebServlet(name = "SaveMaterielServlet", urlPatterns = {"/SaveMateriel"})
+@WebServlet(name = "SaveMeubleMaterielServlet", urlPatterns = {"/SaveMeubleMateriel"})
 public class SaveMeubleMaterielServlet extends HttpServlet {
 
     /**
@@ -36,17 +37,22 @@ public class SaveMeubleMaterielServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
          
-        String nom = request.getParameter("nom");
+        int meubleId = Integer.parseInt(request.getParameter("meubleId"));
+        int materielId = Integer.parseInt(request.getParameter("materielId"));
+        double petit = Double.parseDouble(request.getParameter("petit"));
+        double grand = Double.parseDouble(request.getParameter("grand"));
        
-        Materiel materiel = new Materiel();
-        materiel.setNom(nom);
-        
+        MeubleMateriel model = new MeubleMateriel();
+        model.setMaterielId(materielId);
+        model.setMeubleId(meubleId);
+        model.setPetit(petit);
+        model.setGrand(grand);
         try {
-            materiel.save(null);
-            response.sendRedirect("FormMateriel");
+            model.save(null);
+            response.sendRedirect("FormMeubleMateriel?meuble=" + meubleId);
         } catch (SQLException ex) {
             Logger.getLogger(SaveMeubleMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
-            response.sendRedirect("FormMateriel?error=" + ex.getMessage());
+            response.sendRedirect("FormMeubleMateriel?error=" + ex.getMessage());
         }
     }
 

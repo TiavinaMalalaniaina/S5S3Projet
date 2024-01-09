@@ -6,7 +6,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -14,13 +13,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Materiel;
+import models.Meuble;
 
 /**
  *
  * @author itu
  */
-@WebServlet(name = "SaveMaterielServlet", urlPatterns = {"/SaveMateriel"})
+@WebServlet(name = "SaveMeubleServlet", urlPatterns = {"/SaveMeuble"})
 public class SaveMeubleServlet extends HttpServlet {
 
     /**
@@ -36,14 +35,18 @@ public class SaveMeubleServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
          
-        int styleId = Integer.parseInt(request.getParameter("style"));
-        int categorieId = Integer.parseInt(request.getParameter("categorie"));
+        int styleId = Integer.parseInt(request.getParameter("styleId"));
+        int categorieId = Integer.parseInt(request.getParameter("categorieId"));
         
         try {
-            response.sendRedirect("FormMateriel");
+            Meuble meuble = new Meuble();
+            meuble.setStyleId(styleId);
+            meuble.setCategorieId(categorieId);
+            meuble.save(null);
+            response.sendRedirect("FormMeuble");
         } catch (Exception ex) {
             Logger.getLogger(SaveMeubleServlet.class.getName()).log(Level.SEVERE, null, ex);
-            response.sendRedirect("FormMateriel?error=" + ex.getMessage());
+            response.sendRedirect("FormMeuble?error=" + ex.getMessage());
         }
     }
 

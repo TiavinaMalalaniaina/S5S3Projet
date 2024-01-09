@@ -17,14 +17,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Materiel;
+import models.Meuble;
 import models.ViewModel;
 
 /**
  *
  * @author tiavi
  */
-@WebServlet(name = "FormMeubleMaterielServlet", urlPatterns = {"/FormMeubleMateriel"})
-public class FormMeubleMaterielServlet extends HttpServlet {
+@WebServlet(name = "ListMeubleServlet", urlPatterns = {"/ListMeuble"})
+public class ListMeubleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,22 +40,24 @@ public class FormMeubleMaterielServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            int idMeuble = Integer.parseInt(request.getParameter("meuble"));
+            int materiel = Integer.parseInt(request.getParameter("materielId"));
             try {
-                List<Materiel> materiels = Materiel.findByType(null, idMeuble);
+                List<Meuble> meubles = Meuble.findByMateriel(null, materiel);
+                List<Materiel> materiels = Materiel.findAll(null);
                 ViewModel model = new ViewModel();
-                model.setError(request.getParameter("error"));
+                model.meubles = meubles;
                 model.materiels = materiels;
-                model.meubleId = idMeuble;
-                request.setAttribute("viewName", "components/formMeubleMateriel.jsp");
-                request.setAttribute("title", "");
-                request.setAttribute("viewTitle", "Formulaire de matériel");
+       
+                model.setError(request.getParameter("error"));
+                request.setAttribute("viewName", "components/listeMeuble.jsp");
                 request.setAttribute("model", model);
+                RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+                dispatch.forward(request, response);
             } catch (Exception ex) {
-                Logger.getLogger(FormMeubleMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ListMeubleServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-            RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
-            dispatch.forward(request, response);
+            
+            
         }
     }
 

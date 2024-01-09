@@ -4,8 +4,8 @@
     ViewModel model = (ViewModel) request.getAttribute("model");
 %>
 
-<form method="POST" action="SaveStyle">
-    <input type="hidden" name="meuble" value="">
+<form method="GET" action="SaveMeubleMateriel">
+    <input type="hidden" name="meubleId" value="<%= model.meubleId %>">
     <div class="form-group">
         <label for="id_label_multiple">
           Materiel
@@ -18,11 +18,11 @@
     </div>
     <div class="form-group">
         <label for="nom">Petit:</label>
-        <input type="text" class="form-control" id="nom" name="petit" placeholder="Saisissez le nom ...">
+        <input type="number" class="form-control" id="nom" name="petit" placeholder="Saisissez le nom ...">
     </div>
     <div class="form-group">
         <label for="nom">Grand:</label>
-        <input type="text" class="form-control" id="nom" name="grand" placeholder="Saisissez le nom ...">
+        <input type="number" class="form-control" id="nom" name="grand" placeholder="Saisissez le nom ...">
     </div>
       <input class="btn btn-primary" type="submit" value="Valider">
 </form>

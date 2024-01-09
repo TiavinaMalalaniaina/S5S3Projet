@@ -47,6 +47,10 @@ public class Materiel {
     public void setNom(String nom) {
         this.nom = nom;
     }
+    
+    public List<Materiel> findByMeubleId(Connection connection) {
+        return new ArrayList<>();
+    }
  
      public void save(Connection connection) throws SQLException {
         boolean wasConnected = true;
