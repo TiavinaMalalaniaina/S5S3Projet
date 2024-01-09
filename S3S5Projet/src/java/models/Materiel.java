@@ -80,10 +80,11 @@ public class Materiel {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "INSERT INTO \"public\".materiel (id, nom) VALUES (default,?) RETURNING id";
+        String sql = "INSERT INTO \"public\".materiel (id, nom,prix_unitaire) VALUES (default,?,?) RETURNING id";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, this.getNom());
+            stmt.setDouble(1, this.getPrixUnitaire());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) this.setId(rs.getInt("id"));
         } finally {
