@@ -24,12 +24,34 @@ import util.DBConnection;
 public class Materiel {
     int id;
     String nom;
+    double prixUnitaire;
+
+    public double getPrixUnitaire() {
+        return prixUnitaire;
+    }
+
+    public void setPrixUnitaire(double prixUnitaire) {
+        this.prixUnitaire = prixUnitaire;
+    }
+    
+    
     
     public Materiel(){}
+
+    public Materiel(String nom, double prixUnitaire) {
+        this.nom = nom;
+        this.prixUnitaire = prixUnitaire;
+    }
     
     public Materiel(int id,String nom){
         this.id = id;
         this.nom = nom;
+    }
+
+    public Materiel(int id, String nom, double prixUnitaire) {
+        this.id = id;
+        this.nom = nom;
+        this.prixUnitaire = prixUnitaire;
     }
 
     public int getId() {

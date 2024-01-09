@@ -26,6 +26,43 @@ public class Meuble {
     String categorieNom;
     double petit;
     double grand;
+    double prix_petit;
+    double prix_grand;
+
+    private Meuble() {
+       
+    }
+
+    public double getPrix_petit() {
+        return prix_petit;
+    }
+
+    public void setPrix_petit(double prix_petit) {
+        this.prix_petit = prix_petit;
+    }
+
+    public double getPrix_grand() {
+        return prix_grand;
+    }
+
+    public void setPrix_grand(double prix_grand) {
+        this.prix_grand = prix_grand;
+    }
+
+    public Meuble(int id, int styleId, int categorieId, List<Materiel> materiels, String styleNom, String categorieNom, double petit, double grand, double prix_petit, double prix_grand) {
+        this.id = id;
+        this.styleId = styleId;
+        this.categorieId = categorieId;
+        this.materiels = materiels;
+        this.styleNom = styleNom;
+        this.categorieNom = categorieNom;
+        this.petit = petit;
+        this.grand = grand;
+        this.prix_petit = prix_petit;
+        this.prix_grand = prix_grand;
+    }
+    
+    
     
     public void save(Connection connection) throws SQLException {
         boolean wasConnected = true;
@@ -62,6 +99,38 @@ public class Meuble {
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, materielId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Meuble model = new Meuble();
+                model.setId(rs.getInt("meuble_id"));   // int
+                model.setStyleNom(rs.getString("style_nom"));  // String
+                model.setCategorieNom(rs.getString("categorie_nom"));  // String
+                model.setPetit(rs.getDouble("petit"));
+                model.setGrand(rs.getDouble("grand"));
+                models.add(model);
+            }
+        } finally {
+            if (!wasConnected) {
+                connection.close();
+            }
+        } 
+        return models;
+    }
+    
+     public static List<Meuble> findByPrix(Connection connection,double prix_min,double prix_max) throws SQLException {
+        List<Meuble> models = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = DBConnection.getConnection();
+        }
+        String sql = "select * from v_meuble_prix where (prix_petit >= ? and  prix_petit =< ?) or(prix_grand =< ? and prix_grand >= ?);";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setDouble(1, prix_min);
+            stmt.setDouble(2, prix_max);
+            stmt.setDouble(3, prix_min);
+            stmt.setDouble(4, prix_max);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Meuble model = new Meuble();
