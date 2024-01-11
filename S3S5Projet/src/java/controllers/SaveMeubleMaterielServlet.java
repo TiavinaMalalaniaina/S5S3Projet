@@ -43,7 +43,7 @@ public class SaveMeubleMaterielServlet extends HttpServlet {
         double grand = Double.parseDouble(request.getParameter("grand"));
        
         MeubleMateriel model = new MeubleMateriel();
-        model.setMaterielId(materielId);
+//        model.setMaterielId(materielId);
         model.setMeubleId(meubleId);
         model.setPetit(petit);
         model.setGrand(grand);
