@@ -20,7 +20,7 @@ import models.ViewModel;
  *
  * @author tiavi
  */
-@WebServlet(name = "ListeStockMeubleServlet", urlPatterns = {"/ListeStockMeubleServlet"})
+@WebServlet(name = "ListeStockMeubleServlet", urlPatterns = {"/ListeStockMeuble"})
 public class ListeStockMeubleServlet extends HttpServlet {
 
     /**

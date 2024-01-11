@@ -182,6 +182,34 @@ public class Materiel {
         } 
         return model;
     }
+    
+    public static List<Materiel> findQuantite(Connection connection) throws SQLException, Exception {
+        List<Materiel> models = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = DBConnection.getConnection();
+        }
+        String sql = "SELECT * FROM v_materiel_stock";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            
+            System.out.println(stmt.toString());
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Materiel model = new Materiel();
+                model.setId(rs.getInt("materiel_id"));   // int
+                model.setNom(rs.getString("materiel_nom"));  // String
+                model.setQuantite(rs.getDouble("quantite"));
+                models.add(model);
+            }
+        } finally {
+            if (!wasConnected) {
+                connection.close();
+            }
+        } 
+        return models;
+    }
 
        
 }

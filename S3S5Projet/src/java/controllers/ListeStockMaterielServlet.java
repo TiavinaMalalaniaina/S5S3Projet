@@ -7,6 +7,8 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,6 +39,7 @@ public class ListeStockMaterielServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             ViewModel model = new ViewModel();
+            model.materiels = Materiel.findQuantite(null);
             model.setError(request.getParameter("error"));
             request.setAttribute("viewName", "components/listeStockMateriel.jsp");
             request.setAttribute("title", "MATERIEL");
@@ -44,6 +47,8 @@ public class ListeStockMaterielServlet extends HttpServlet {
             request.setAttribute("model", model);
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ListeStockMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
