@@ -7,6 +7,9 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Materiel;
+import models.Meuble;
 import models.ViewModel;
 
 /**
@@ -37,13 +41,16 @@ public class ListeStockMeubleServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             ViewModel model = new ViewModel();
+            model.meubles = new Meuble().findAllWithQuantite(null);
             model.setError(request.getParameter("error"));
-            request.setAttribute("viewName", "components/listeSTockMeuble.jsp");
+            request.setAttribute("viewName", "components/listeStockMeuble.jsp");
             request.setAttribute("title", "MATERIEL");
             request.setAttribute("viewTitle", "Ajout de matériel");
             request.setAttribute("model", model);
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListeStockMeubleServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
