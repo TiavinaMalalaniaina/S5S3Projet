@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import util.DBConnection;
 
 /**
@@ -22,9 +24,21 @@ public class MeubleMateriel {
     double petit;
     double grand;
 
+    public MeubleMateriel() {
+      
+    }
+
     @Override
     public String toString() {
-        return "MeubleMateriel{" + "id=" + id + ", meubleId=" + meubleId + ", materielId=" + materielId + ", petit=" + petit + ", grand=" + grand + '}';
+        return "MeubleMeubleMateriel{" + "id=" + id + ", meubleId=" + meubleId + ", materielId=" + materielId + ", petit=" + petit + ", grand=" + grand + '}';
+    }
+
+    public MeubleMateriel(int id, int meubleId, int materielId, double petit, double grand) {
+        this.id = id;
+        this.meubleId = meubleId;
+        this.materielId = materielId;
+        this.petit = petit;
+        this.grand = grand;
     }
     
     
@@ -39,7 +53,7 @@ public class MeubleMateriel {
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, this.getMeubleId());
-            stmt.setInt(2, this.getMaterielId());
+            stmt.setInt(2, this.getMeubleMaterielId());
             stmt.setDouble(3, this.getPetit());
             stmt.setDouble(4, this.getGrand());
             System.out.println(stmt);
@@ -68,11 +82,11 @@ public class MeubleMateriel {
         this.meubleId = meubleId;
     }
 
-    public int getMaterielId() {
+    public int getMeubleMaterielId() {
         return materielId;
     }
 
-    public void setMaterielId(int materielId) {
+    public void setMeubleMaterielId(int materielId) {
         this.materielId = materielId;
     }
 
@@ -92,5 +106,33 @@ public class MeubleMateriel {
         this.grand = grand;
     }
     
-    
+     public static List<MeubleMateriel> findByType(Connection connection,int id) throws SQLException, Exception {
+        List<MeubleMateriel> models = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = DBConnection.getConnection();
+        }
+        String sql = "SELECT * FROM meuble_materiel where meuble_id = ?";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            System.out.println(stmt.toString());
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                MeubleMateriel model = new MeubleMateriel();
+                model.setId(rs.getInt("id"));   // int
+                model.setMeubleId(rs.getInt("meuble_id")); 
+                model.setMeubleMaterielId(rs.getInt("materiel_id"));
+                 model.setPetit(rs.getDouble("petit"));
+                  model.setGrand(rs.getDouble("grand"));
+                models.add(model);
+            }
+        } finally {
+            if (!wasConnected) {
+                connection.close();
+            }
+        } 
+        return models;
+    }
 }

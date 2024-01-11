@@ -25,7 +25,16 @@ public class Materiel {
     int id;
     String nom;
     double prixUnitaire;
+    double quantite;
 
+    public double getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(double quantite) {
+        this.quantite = quantite;
+    }
+    
     public double getPrixUnitaire() {
         return prixUnitaire;
     }
@@ -88,12 +97,14 @@ public class Materiel {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) this.setId(rs.getInt("id"));
         } finally {
+            
             if (!wasConnected) {
                 connection.close();
             }
         } 
     }
     
+     
      public static List<Materiel> findByType(Connection connection,int id) throws SQLException, Exception {
         List<Materiel> models = new ArrayList<>();
         boolean wasConnected = true;
@@ -145,4 +156,31 @@ public class Materiel {
         } 
         return models;
     }
+         public static Materiel findQuantite(Connection connection,int id) throws SQLException, Exception {
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = DBConnection.getConnection();
+        }
+        String sql = "SELECT * FROM v_materiel_stock where materiel_id = ?";
+        
+        Materiel model = new Materiel();
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            System.out.println(stmt.toString());
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                
+                model.setId(rs.getInt("materiel_id"));   // int
+                model.setNom(rs.getString("materiel_nom"));  // String
+            }
+        } finally {
+            if (!wasConnected) {
+                connection.close();
+            }
+        } 
+        return model;
+    }
+
+       
 }

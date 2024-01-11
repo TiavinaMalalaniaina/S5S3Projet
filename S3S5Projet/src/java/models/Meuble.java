@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import util.DBConnection;
 
 /**
@@ -117,6 +119,42 @@ public class Meuble {
         return models;
     }
     
+    
+     public void buildMeuble(int meubleId, double petit,double grand){
+         
+           Connection connection;
+           List<MaterielStock> materielStock = new ArrayList<>();
+           
+        try {
+            connection = DBConnection.getConnection();
+               try {
+                   List<MeubleMateriel> meubles =  MeubleMateriel.findByType(connection,meubleId);
+                   for(MeubleMateriel m : meubles){
+                     Materiel mat = Materiel.findQuantite(connection,m.getMeubleMaterielId());
+                     double quantite = mat.getQuantite();
+                     if(quantite <(petit * m.getPetit())+(grand * m.getGrand())){
+                         
+                     }
+                     else{
+                       MaterielStock ms = new MaterielStock(m.getId(),-((petit * m.getPetit())+(grand * m.getGrand())));
+                       materielStock.add(ms);
+                     }
+                   }
+                   
+                   for(MaterielStock m :materielStock){
+                        m.save(connection);
+                   }
+                   MeubleStock mb = new MeubleStock(meubleId,petit,grand);
+                   mb.save(connection);
+                   
+               } catch (Exception ex) {
+                   Logger.getLogger(Meuble.class.getName()).log(Level.SEVERE, null, ex);
+               }
+        } catch (SQLException ex) {
+            Logger.getLogger(Meuble.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+     }
      public static List<Meuble> findByPrix(Connection connection,double prix_min,double prix_max) throws SQLException {
         List<Meuble> models = new ArrayList<>();
         boolean wasConnected = true;
