@@ -6,22 +6,22 @@
 package controllers;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Materiel;
+import models.ViewModel;
 
 /**
  *
- * @author itu
+ * @author tiavi
  */
-@WebServlet(name = "SaveMaterielServlet", urlPatterns = {"/SaveMateriel"})
-public class SaveMaterielServlet extends HttpServlet {
+@WebServlet(name = "ListeStockMaterielServlet", urlPatterns = {"/ListeStockMateriel"})
+public class ListeStockMaterielServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,20 +35,15 @@ public class SaveMaterielServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         
-        String nom = request.getParameter("nom");
-        double prix = Double.parseDouble(request.getParameter("prix"));
-       
-        Materiel materiel = new Materiel();
-        materiel.setNom(nom);
-        materiel.setPrixUnitaire(prix);
-        
-        try {
-            materiel.save(null);
-            response.sendRedirect("FormMateriel");
-        } catch (SQLException ex) {
-            Logger.getLogger(SaveMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
-            response.sendRedirect("FormMateriel?error=" + ex.getMessage());
+        try (PrintWriter out = response.getWriter()) {
+            ViewModel model = new ViewModel();
+            model.setError(request.getParameter("error"));
+            request.setAttribute("viewName", "components/listeStockMateriel.jsp");
+            request.setAttribute("title", "MATERIEL");
+            request.setAttribute("viewTitle", "Ajout de matériel");
+            request.setAttribute("model", model);
+            RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+            dispatch.forward(request, response);
         }
     }
 

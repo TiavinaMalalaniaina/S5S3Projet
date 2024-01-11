@@ -20,6 +20,12 @@
                     <li>
                         <a href="FormMateriel">Ajout de materiel</a>
                     </li>
+                    <li>
+                        <a href="FormMeuble">Ajout de meuble</a>
+                    </li>
+                    <li>
+                        <a href="ListMeubleFiltre?min=0&max=0">Liste des meubles</a>
+                    </li>
                 </ul>
             </li>
             <li>

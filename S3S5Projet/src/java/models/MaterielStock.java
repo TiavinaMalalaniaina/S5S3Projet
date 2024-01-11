@@ -64,10 +64,10 @@ public class MaterielStock {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "INSERT INTO \"public\".materiel_stock (id, materiel_id, quantity) VALUES (default,?,?) RETURNING id";
+        String sql = "INSERT INTO \"public\".materiel_stock (id, materiel_id, quantite) VALUES (default,?,?) RETURNING id";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, this.getId());
+            stmt.setInt(1, this.getMateriel_id());
             stmt.setDouble(2, this.getQuantite());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) this.setId(rs.getInt("id"));

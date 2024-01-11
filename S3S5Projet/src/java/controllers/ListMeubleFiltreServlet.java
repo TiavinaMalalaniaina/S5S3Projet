@@ -6,22 +6,27 @@
 package controllers;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Materiel;
+import models.Meuble;
+import models.ViewModel;
 
 /**
  *
- * @author itu
+ * @author tiavi
  */
-@WebServlet(name = "SaveMaterielServlet", urlPatterns = {"/SaveMateriel"})
-public class SaveMaterielServlet extends HttpServlet {
+@WebServlet(name = "ListMeubleFiltreServlet", urlPatterns = {"/ListMeubleFiltre"})
+public class ListMeubleFiltreServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,20 +40,25 @@ public class SaveMaterielServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         
-        String nom = request.getParameter("nom");
-        double prix = Double.parseDouble(request.getParameter("prix"));
-       
-        Materiel materiel = new Materiel();
-        materiel.setNom(nom);
-        materiel.setPrixUnitaire(prix);
-        
-        try {
-            materiel.save(null);
-            response.sendRedirect("FormMateriel");
-        } catch (SQLException ex) {
-            Logger.getLogger(SaveMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
-            response.sendRedirect("FormMateriel?error=" + ex.getMessage());
+        double prixMin = Double.parseDouble(request.getParameter("min"));
+        double prixMax = Double.parseDouble(request.getParameter("max"));
+        try (PrintWriter out = response.getWriter()) {
+            List<Meuble> meubles;
+            try {
+                meubles = Meuble.findByPrix(null, prixMin, prixMax); //TODO: add function to filtre by price
+                ViewModel model = new ViewModel();
+                model.meubles = meubles;
+                model.setError(request.getParameter("error"));
+                request.setAttribute("viewName", "components/listeMeubleFiltre.jsp");
+                request.setAttribute("viewTitle", "Listes des meubles");
+                request.setAttribute("title", "MEUBLE");
+                request.setAttribute("viewName", "components/listeMeubleFiltre.jsp");
+                request.setAttribute("model", model);
+                RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+                dispatch.forward(request, response);
+            } catch (SQLException ex) {
+                Logger.getLogger(ListMeubleFiltreServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

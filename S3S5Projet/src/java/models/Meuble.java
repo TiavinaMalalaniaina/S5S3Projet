@@ -31,7 +31,7 @@ public class Meuble {
     double prix_petit;
     double prix_grand;
 
-    private Meuble() {
+    public Meuble() {
        
     }
 
@@ -86,8 +86,30 @@ public class Meuble {
         } 
     }
     
-    public static List<Meuble> findAll(Connection connection) {
-        return new ArrayList<>();
+    public static List<Meuble> findAll(Connection connection) throws SQLException {
+         List<Meuble> models = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = DBConnection.getConnection();
+        }
+        String sql = "SELECT * FROM v_meuble ";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Meuble model = new Meuble();
+                model.setId(rs.getInt("id"));   
+                model.setStyleNom(rs.getString("style_nom")); 
+                model.setCategorieNom(rs.getString("categorie_nom"));  
+                models.add(model);
+            }
+        } finally {
+            if (!wasConnected) {
+                connection.close();
+            }
+        } 
+        return models;
     }
 
     public static List<Meuble> findByMateriel(Connection connection, int materielId) throws SQLException {
@@ -120,38 +142,35 @@ public class Meuble {
     }
     
     
-     public void buildMeuble(int meubleId, double petit,double grand){
+     public void buildMeuble(int meubleId, double petit,double grand) throws Exception {
          
            Connection connection;
            List<MaterielStock> materielStock = new ArrayList<>();
-           
+           String exception = "";
         try {
             connection = DBConnection.getConnection();
-               try {
-                   List<MeubleMateriel> meubles =  MeubleMateriel.findByType(connection,meubleId);
-                   for(MeubleMateriel m : meubles){
-                     Materiel mat = Materiel.findQuantite(connection,m.getMeubleMaterielId());
-                     double quantite = mat.getQuantite();
-                     if(quantite <(petit * m.getPetit())+(grand * m.getGrand())){
-                         
-                     }
-                     else{
-                       MaterielStock ms = new MaterielStock(m.getId(),-((petit * m.getPetit())+(grand * m.getGrand())));
-                       materielStock.add(ms);
-                     }
-                   }
-                   
-                   for(MaterielStock m :materielStock){
-                        m.save(connection);
-                   }
-                   MeubleStock mb = new MeubleStock(meubleId,petit,grand);
-                   mb.save(connection);
-                   
-               } catch (Exception ex) {
-                   Logger.getLogger(Meuble.class.getName()).log(Level.SEVERE, null, ex);
-               }
+            List<MeubleMateriel> meubles =  MeubleMateriel.findByType(connection,meubleId);
+            for(MeubleMateriel m : meubles){
+              Materiel mat = Materiel.findQuantite(connection,m.getMeubleMaterielId());
+              double quantite = mat.getQuantite();
+              if(quantite <(petit * m.getPetit())+(grand * m.getGrand())){
+                  exception += mat.getNom() + "=" + ((petit * m.getPetit())+(grand * m.getGrand()) - quantite) + "; ";
+              }
+              else{
+                MaterielStock ms = new MaterielStock(mat.getId(),-((petit * m.getPetit())+(grand * m.getGrand())));
+                materielStock.add(ms);
+              }
+            }
+            if (!exception.equals("")) throw new Exception("Manquant: " + exception);
+            for(MaterielStock m : materielStock){
+                 m.save(connection);
+            }
+            MeubleStock mb = new MeubleStock(meubleId,petit,grand);
+            mb.save(connection);
         } catch (SQLException ex) {
             Logger.getLogger(Meuble.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            throw ex;
         }
         
      }
@@ -162,21 +181,21 @@ public class Meuble {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "select * from v_meuble_prix where (prix_petit >= ? and  prix_petit =< ?) or(prix_grand =< ? and prix_grand >= ?);";
-        
+        String sql = "select * from v_meuble_prix where (prix_petit >= ? and  prix_petit <= ?) or (prix_grand <= ? and prix_grand >= ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setDouble(1, prix_min);
             stmt.setDouble(2, prix_max);
             stmt.setDouble(3, prix_min);
             stmt.setDouble(4, prix_max);
+            System.out.println(stmt);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Meuble model = new Meuble();
                 model.setId(rs.getInt("meuble_id"));   // int
                 model.setStyleNom(rs.getString("style_nom"));  // String
                 model.setCategorieNom(rs.getString("categorie_nom"));  // String
-                model.setPetit(rs.getDouble("petit"));
-                model.setGrand(rs.getDouble("grand"));
+                model.setPrix_petit(rs.getDouble("prix_petit"));
+                model.setPrix_grand(rs.getDouble("prix_grand"));
                 models.add(model);
             }
         } finally {

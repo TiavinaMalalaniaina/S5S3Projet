@@ -93,7 +93,7 @@ public class Materiel {
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, this.getNom());
-            stmt.setDouble(1, this.getPrixUnitaire());
+            stmt.setDouble(2, this.getPrixUnitaire());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) this.setId(rs.getInt("id"));
         } finally {
@@ -156,7 +156,7 @@ public class Materiel {
         } 
         return models;
     }
-         public static Materiel findQuantite(Connection connection,int id) throws SQLException, Exception {
+    public static Materiel findQuantite(Connection connection,int id) throws SQLException, Exception {
         boolean wasConnected = true;
         if (connection == null) {
             wasConnected = false;
@@ -173,6 +173,7 @@ public class Materiel {
                 
                 model.setId(rs.getInt("materiel_id"));   // int
                 model.setNom(rs.getString("materiel_nom"));  // String
+                model.setQuantite(rs.getDouble("quantite"));
             }
         } finally {
             if (!wasConnected) {
