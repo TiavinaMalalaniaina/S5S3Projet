@@ -37,13 +37,17 @@ public class SaveMeubleServlet extends HttpServlet {
          
         int styleId = Integer.parseInt(request.getParameter("styleId"));
         int categorieId = Integer.parseInt(request.getParameter("categorieId"));
+        double prixPetit = Double.parseDouble(request.getParameter("prix_vente_petit"));
+        double prixGrand = Double.parseDouble(request.getParameter("prix_vente_grand"));
         
         try {
             Meuble meuble = new Meuble();
             meuble.setStyleId(styleId);
             meuble.setCategorieId(categorieId);
+            meuble.setPrix_petit(prixPetit);
+            meuble.setPrix_grand(prixGrand);
             meuble.save(null);
-            response.sendRedirect("FormMeuble");
+            response.sendRedirect("FormMeubleMateriel?meuble=" + meuble.getId());
         } catch (Exception ex) {
             Logger.getLogger(SaveMeubleServlet.class.getName()).log(Level.SEVERE, null, ex);
             response.sendRedirect("FormMeuble?error=" + ex.getMessage());

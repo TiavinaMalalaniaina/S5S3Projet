@@ -26,3 +26,6 @@
     </div>
       <input class="btn btn-primary" type="submit" value="Valider">
 </form>
+<a href="/S3S5Projet/FormMeubleEmploye?meuble=<%= model.meubleId %>">
+    <button class="btn btn-secondary" type="submit">Terminer</button>
+</a>  

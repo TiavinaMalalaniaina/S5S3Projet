@@ -30,6 +30,8 @@ public class Meuble {
     double grand;
     double prix_petit;
     double prix_grand;
+    double benefice_petit;
+    double benefice_grand;
 
     public Meuble() {
        
@@ -72,11 +74,13 @@ public class Meuble {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "INSERT INTO \"public\".meuble (id, style_id, categorie_id) VALUES (default,?,?) RETURNING id";
+        String sql = "INSERT INTO \"public\".meuble (id, style_id, categorie_id, prix_vente_petit, prix_vente_grand) VALUES (default,?,?,?,?) RETURNING id";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, this.getStyleId());
             stmt.setInt(2, this.getCategorieId());
+            stmt.setDouble(3, this.getPrix_petit());
+            stmt.setDouble(4, this.getPrix_grand());
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) this.setId(rs.getInt("id"));
         } finally {
@@ -212,7 +216,7 @@ public class Meuble {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "select * from v_meuble_prix where (prix_petit >= ? and  prix_petit <= ?) or (prix_grand <= ? and prix_grand >= ?)";
+        String sql = "select * from v_meuble_materiel_prix where (prix_petit between ? and ?) or (prix_grand between ? and ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setDouble(1, prix_min);
             stmt.setDouble(2, prix_max);
@@ -237,7 +241,37 @@ public class Meuble {
         return models;
     }
     
-     
+    public static List<Meuble> findByBenefice(Connection connection,double prix_min,double prix_max) throws SQLException {
+        List<Meuble> models = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = DBConnection.getConnection();
+        }
+        String sql = "select * from v_meubles where (benefice_petit between ? and ?) or (benefice_grand between ? and ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setDouble(1, prix_min);
+            stmt.setDouble(2, prix_max);
+            stmt.setDouble(3, prix_min);
+            stmt.setDouble(4, prix_max);
+            System.out.println(stmt);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Meuble model = new Meuble();
+                model.setId(rs.getInt("id"));   // int
+                model.setStyleNom(rs.getString("style_nom"));  // String
+                model.setCategorieNom(rs.getString("categorie_nom"));  // String
+                model.setBenefice_petit(rs.getDouble("benefice_petit"));
+                model.setBenefice_grand(rs.getDouble("benefice_grand"));
+                models.add(model);
+            }
+        } finally {
+            if (!wasConnected) {
+                connection.close();
+            }
+        } 
+        return models;
+    }
      
        
        
@@ -303,6 +337,22 @@ public class Meuble {
 
     public void setGrand(double grand) {
         this.grand = grand;
+    }
+
+    public double getBenefice_petit() {
+        return benefice_petit;
+    }
+
+    public void setBenefice_petit(double benefice_petit) {
+        this.benefice_petit = benefice_petit;
+    }
+
+    public double getBenefice_grand() {
+        return benefice_grand;
+    }
+
+    public void setBenefice_grand(double benefice_grand) {
+        this.benefice_grand = benefice_grand;
     }
     
     

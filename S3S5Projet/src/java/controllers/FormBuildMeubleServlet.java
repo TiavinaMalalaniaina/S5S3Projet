@@ -43,7 +43,7 @@ public class FormBuildMeubleServlet extends HttpServlet {
             model.meubles = Meuble.findAll(null);
             model.setError(request.getParameter("error"));
             request.setAttribute("viewName", "components/formBuildMeuble.jsp");
-            request.setAttribute("title", "MATERIEL");
+            request.setAttribute("title", "MEUBLE");
             request.setAttribute("viewTitle", "Construire un meuble");
             request.setAttribute("model", model);
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");

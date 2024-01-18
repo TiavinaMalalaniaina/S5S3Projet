@@ -7,7 +7,7 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -17,15 +17,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Materiel;
-import models.Meuble;
+import models.TypeEmploye;
 import models.ViewModel;
 
 /**
  *
  * @author tiavi
  */
-@WebServlet(name = "ListeStockMeubleServlet", urlPatterns = {"/ListeStockMeuble"})
-public class ListeStockMeubleServlet extends HttpServlet {
+@WebServlet(name = "FormMeubleEmployeServlet", urlPatterns = {"/FormMeubleEmploye"})
+public class FormMeubleEmployeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,17 +40,21 @@ public class ListeStockMeubleServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            ViewModel model = new ViewModel();
-            model.meubles = new Meuble().findAllWithQuantite(null);
-            model.setError(request.getParameter("error"));
-            request.setAttribute("viewName", "components/listeStockMeuble.jsp");
-            request.setAttribute("title", "MEUBLE");
-            request.setAttribute("viewTitle", "Stock de meuble");
-            request.setAttribute("model", model);
+            int idMeuble = Integer.parseInt(request.getParameter("meuble"));
+            try {
+                ViewModel model = new ViewModel();
+                model.setError(request.getParameter("error"));
+                model.meubleId = idMeuble;
+                model.typeEmployes = TypeEmploye.findAll(null);
+                request.setAttribute("viewName", "components/formMeubleEmploye.jsp");
+                request.setAttribute("title", "MEUBLE");
+                request.setAttribute("viewTitle", "Employe necessaire pour le meuble");
+                request.setAttribute("model", model);
+            } catch (Exception ex) {
+                Logger.getLogger(FormMeubleMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ListeStockMeubleServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

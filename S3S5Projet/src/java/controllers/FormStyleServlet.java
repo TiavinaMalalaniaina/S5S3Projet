@@ -23,7 +23,7 @@ import models.ViewModel;
  *
  * @author tiavi
  */
-@WebServlet(name = "FormTypeServlet", urlPatterns = {"/FormStyle"})
+@WebServlet(name = "FormStyleServlet", urlPatterns = {"/FormStyle"})
 public class FormStyleServlet extends HttpServlet {
 
     /**
@@ -46,13 +46,11 @@ public class FormStyleServlet extends HttpServlet {
       
 
             ViewModel model = new ViewModel();
-            
             model.materiels = materiel;
-           
             model.setError(request.getParameter("error"));
             request.setAttribute("viewName", "components/formStyle.jsp");
             request.setAttribute("title", "STYLE");
-            request.setAttribute("viewTitle", "Formulaire de style");
+            request.setAttribute("viewTitle", "Création d'un style");
             request.setAttribute("model", model);
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);

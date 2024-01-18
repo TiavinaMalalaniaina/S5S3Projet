@@ -22,6 +22,7 @@ public class ViewModel {
     public List<Style> styles = new ArrayList<>();
     public List<Categorie> categories = new ArrayList<>();
     public List<Meuble> meubles = new ArrayList<>();
+    public List<TypeEmploye> typeEmployes = new ArrayList<>();
     public int meubleId = 0;
     
     String error;

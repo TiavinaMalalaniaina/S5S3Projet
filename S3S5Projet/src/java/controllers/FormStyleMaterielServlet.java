@@ -7,7 +7,7 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -17,15 +17,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Materiel;
-import models.Meuble;
 import models.ViewModel;
 
 /**
  *
  * @author tiavi
  */
-@WebServlet(name = "ListeStockMeubleServlet", urlPatterns = {"/ListeStockMeuble"})
-public class ListeStockMeubleServlet extends HttpServlet {
+@WebServlet(name = "FormStyleMaterielServlet", urlPatterns = {"/FormStyleMateriel"})
+public class FormStyleMaterielServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,19 +38,29 @@ public class ListeStockMeubleServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+         try {
+              List<Materiel> materiel;
         try (PrintWriter out = response.getWriter()) {
+            
+                materiel = Materiel.findAll(null);            
+      
+
             ViewModel model = new ViewModel();
-            model.meubles = new Meuble().findAllWithQuantite(null);
+            
+            model.materiels = materiel;
+           
             model.setError(request.getParameter("error"));
-            request.setAttribute("viewName", "components/listeStockMeuble.jsp");
-            request.setAttribute("title", "MEUBLE");
-            request.setAttribute("viewTitle", "Stock de meuble");
+            request.setAttribute("viewName", "components/formStyle.jsp");
+            request.setAttribute("title", "STYLE");
+            request.setAttribute("viewTitle", "Création d'un style");
             request.setAttribute("model", model);
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ListeStockMeubleServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+            } catch (Exception ex) {
+                Logger.getLogger(FormStyleMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         response.sendRedirect("/FormTypeServlet");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

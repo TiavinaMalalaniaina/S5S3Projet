@@ -6,26 +6,24 @@
 package controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Materiel;
-import models.Meuble;
-import models.ViewModel;
+import models.MeubleEmploye;
+import models.TypeEmploye;
 
 /**
  *
- * @author tiavi
+ * @author itu
  */
-@WebServlet(name = "ListeStockMeubleServlet", urlPatterns = {"/ListeStockMeuble"})
-public class ListeStockMeubleServlet extends HttpServlet {
+@WebServlet(name = "SaveMeubleEmployeServlet", urlPatterns = {"/SaveMeubleEmploye"})
+public class SaveMeubleEmployeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,18 +37,22 @@ public class ListeStockMeubleServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            ViewModel model = new ViewModel();
-            model.meubles = new Meuble().findAllWithQuantite(null);
-            model.setError(request.getParameter("error"));
-            request.setAttribute("viewName", "components/listeStockMeuble.jsp");
-            request.setAttribute("title", "MEUBLE");
-            request.setAttribute("viewTitle", "Stock de meuble");
-            request.setAttribute("model", model);
-            RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
-            dispatch.forward(request, response);
+        int meubleId = Integer.parseInt(request.getParameter("meubleId"));
+        int typeEmployeId = Integer.parseInt(request.getParameter("type_employe_id"));
+        int nbPersonne = Integer.parseInt(request.getParameter("nb_personne"));
+        int heureTravail = Integer.parseInt(request.getParameter("heure_travail"));
+        
+        MeubleEmploye model = new MeubleEmploye();
+        model.setMeubleId(meubleId);
+        model.setTypeEmployeId(typeEmployeId);
+        model.setNbPersonne(nbPersonne);
+        model.setHeureTravail(heureTravail);
+        try {
+            model.save(null);
+            response.sendRedirect("FormMeubleEmploye?meuble=" + meubleId);
         } catch (SQLException ex) {
-            Logger.getLogger(ListeStockMeubleServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SaveMeubleEmployeServlet.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect("FormMeubleEmploye?meuble=" + meubleId + "&error=" + ex.getMessage());
         }
     }
 

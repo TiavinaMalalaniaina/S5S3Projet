@@ -43,7 +43,7 @@ public class ListeStockMaterielServlet extends HttpServlet {
             model.setError(request.getParameter("error"));
             request.setAttribute("viewName", "components/listeStockMateriel.jsp");
             request.setAttribute("title", "MATERIEL");
-            request.setAttribute("viewTitle", "Ajout de matériel");
+            request.setAttribute("viewTitle", "Stock de matériel");
             request.setAttribute("model", model);
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);

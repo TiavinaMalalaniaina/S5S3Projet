@@ -43,7 +43,7 @@ public class SaveMeubleMaterielServlet extends HttpServlet {
         double grand = Double.parseDouble(request.getParameter("grand"));
        
         MeubleMateriel model = new MeubleMateriel();
-//        model.setMaterielId(materielId);
+        model.setMaterielId(materielId);
         model.setMeubleId(meubleId);
         model.setPetit(petit);
         model.setGrand(grand);
@@ -52,7 +52,7 @@ public class SaveMeubleMaterielServlet extends HttpServlet {
             response.sendRedirect("FormMeubleMateriel?meuble=" + meubleId);
         } catch (SQLException ex) {
             Logger.getLogger(SaveMeubleMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
-            response.sendRedirect("FormMeubleMateriel?error=" + ex.getMessage());
+            response.sendRedirect("FormMeubleMateriel?meuble="+meubleId+"&error=" + ex.getMessage());
         }
     }
 

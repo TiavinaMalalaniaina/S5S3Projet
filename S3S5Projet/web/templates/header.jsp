@@ -8,34 +8,59 @@
     <div class="p-4 pt-5">
         <h1><a href="index.html" class="logo">Aria</a></h1>
         <ul class="list-unstyled components mb-5">
-            <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">STYLES</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li>
-                        <a href="ListType?style=0">Liste</a>
+            <li>
+                <a href="#meuble" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">MEUBLES</a>
+                <ul class="collapse list-unstyled" id="meuble">
+                     <li>
+                        <a href="FormMeuble">Création</a>
                     </li>
                     <li>
-                        <a href="FormStyle">Ajout de style</a>
+                        <a href="FormBuildMeuble">Construction</a>
                     </li>
                     <li>
-                        <a href="FormMateriel">Ajout de materiel</a>
+                        <a href="ListMeubleFiltre?min=0&max=9999999999">Prix de revient</a>
                     </li>
                     <li>
-                        <a href="FormMeuble">Ajout de meuble</a>
+                        <a href="ListMeubleFiltreBenef?min=0&max=999999999">Bénéfice</a>
                     </li>
                     <li>
-                        <a href="ListMeubleFiltre?min=0&max=0">Liste des meubles</a>
+                        <a href="ListeStockMeuble">Stock</a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a href="#otherComponent" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">EXAMPLES</a>
-                <ul class="collapse list-unstyled" id="otherComponent">
+                <a href="#materiel" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">MATERIEL</a>
+                <ul class="collapse list-unstyled" id="materiel">
                      <li>
-                        <a href="HomeServlet">Listes</a>
+                        <a href="FormMateriel">Création</a>
                     </li>
                     <li>
-                        <a href="CheckServlet">Formulaire</a>
+                        <a href="FormAddMateriel">Ajout</a>
+                    </li>
+                    <li>
+                        <a href="ListMeuble?materielId=0">Meuble</a>
+                    </li>
+                    <li>
+                        <a href="ListeStockMateriel">Stock</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#style" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">STYLE</a>
+                <ul class="collapse list-unstyled" id="style">
+                     <li>
+                        <a href="FormStyle">Création</a>
+                    </li>
+                    <li>
+                        <a href="ListType?style=0">Matériel</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#employe" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">EMPLOYE</a>
+                <ul class="collapse list-unstyled" id="employe">
+                     <li>
+                        <a href="FormTypeEmploye">Création</a>
                     </li>
                 </ul>
             </li>

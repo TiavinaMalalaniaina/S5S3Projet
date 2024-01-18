@@ -7,25 +7,20 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Materiel;
-import models.Meuble;
 import models.ViewModel;
 
 /**
  *
  * @author tiavi
  */
-@WebServlet(name = "ListeStockMeubleServlet", urlPatterns = {"/ListeStockMeuble"})
-public class ListeStockMeubleServlet extends HttpServlet {
+@WebServlet(name = "FormTypeEmployeServlet", urlPatterns = {"/FormTypeEmploye"})
+public class FormTypeEmployeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,16 +36,13 @@ public class ListeStockMeubleServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             ViewModel model = new ViewModel();
-            model.meubles = new Meuble().findAllWithQuantite(null);
             model.setError(request.getParameter("error"));
-            request.setAttribute("viewName", "components/listeStockMeuble.jsp");
-            request.setAttribute("title", "MEUBLE");
-            request.setAttribute("viewTitle", "Stock de meuble");
+            request.setAttribute("viewName", "components/formTypeEmploye.jsp");
+            request.setAttribute("title", "EMPLOYE");
+            request.setAttribute("viewTitle", "Création de profession");
             request.setAttribute("model", model);
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ListeStockMeubleServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

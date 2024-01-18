@@ -112,7 +112,7 @@ public class Materiel {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "SELECT * FROM v_style_materiel where style_id = ?";
+        String sql = "SELECT * FROM v_style_materiel_v2 where meuble_id = ?";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);

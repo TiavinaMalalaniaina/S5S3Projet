@@ -53,7 +53,7 @@ public class MeubleMateriel {
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, this.getMeubleId());
-            stmt.setInt(2, this.getMeubleMaterielId());
+            stmt.setInt(2, this.getMaterielId());
             stmt.setDouble(3, this.getPetit());
             stmt.setDouble(4, this.getGrand());
             System.out.println(stmt);
@@ -64,6 +64,14 @@ public class MeubleMateriel {
                 connection.close();
             }
         } 
+    }
+
+    public int getMaterielId() {
+        return materielId;
+    }
+
+    public void setMaterielId(int materielId) {
+        this.materielId = materielId;
     }
 
     public int getId() {

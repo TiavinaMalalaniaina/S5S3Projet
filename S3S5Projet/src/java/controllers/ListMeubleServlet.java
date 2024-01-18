@@ -50,6 +50,7 @@ public class ListMeubleServlet extends HttpServlet {
        
                 model.setError(request.getParameter("error"));
                 request.setAttribute("viewName", "components/listeMeuble.jsp");
+                request.setAttribute("viewTitle", "Listes des meubles comportant le matériel");
                 request.setAttribute("model", model);
                 RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
                 dispatch.forward(request, response);

@@ -27,6 +27,18 @@
         <% } %>
       </select>
     </div>
+    <div class="form-group">
+        <label for="id_label_multiple">
+          Prix de vente petit:
+        </label>
+        <input type="text" class="form-control" id="nom" name="prix_vente_petit" placeholder="Saisissez le prix...">
+    </div>
+    <div class="form-group">
+        <label for="id_label_multiple">
+          Prix de vente grand:
+        </label>
+        <input type="text" class="form-control" id="nom" name="prix_vente_grand" placeholder="Saisissez le prix...">
+    </div>
    
   
       <input class="btn btn-primary" type="submit" value="Valider">

@@ -47,8 +47,8 @@ public class FormMeubleMaterielServlet extends HttpServlet {
                 model.materiels = materiels;
                 model.meubleId = idMeuble;
                 request.setAttribute("viewName", "components/formMeubleMateriel.jsp");
-                request.setAttribute("title", "");
-                request.setAttribute("viewTitle", "Formulaire de matériel");
+                request.setAttribute("title", "MEUBLE");
+                request.setAttribute("viewTitle", "Materiaux nécessaire pour la construction du meuble");
                 request.setAttribute("model", model);
             } catch (Exception ex) {
                 Logger.getLogger(FormMeubleMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);

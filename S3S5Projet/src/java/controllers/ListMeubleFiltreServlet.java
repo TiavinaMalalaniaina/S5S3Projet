@@ -50,7 +50,7 @@ public class ListMeubleFiltreServlet extends HttpServlet {
                 model.meubles = meubles;
                 model.setError(request.getParameter("error"));
                 request.setAttribute("viewName", "components/listeMeubleFiltre.jsp");
-                request.setAttribute("viewTitle", "Listes des meubles");
+                request.setAttribute("viewTitle", "Listes des prix de revient de chaque meuble");
                 request.setAttribute("title", "MEUBLE");
                 request.setAttribute("viewName", "components/listeMeubleFiltre.jsp");
                 request.setAttribute("model", model);
