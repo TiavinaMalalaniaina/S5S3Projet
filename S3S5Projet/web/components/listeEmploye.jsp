@@ -1,3 +1,4 @@
+<%@page import="models.TypeEmploye"%>
 <%@page import="models.Employe"%>
 <%@page import="models.Meuble"%>
 <%@page import="models.Materiel"%>
@@ -9,13 +10,13 @@
 
 <form method="GET" action="ListMeubleFiltre">
     <div class="form-group">
-        <label for="nom">Min:</label>
-        <input type="number" class="form-control" id="nom" name="min" placeholder="Entrez le nom">
+        <select name="type" class="js-example-basic-single form-control" id="id_label_single">
+            <% for(TypeEmploye t : model.typeEmployes){ %>
+             <option value="<%= t.getId() %>"><%= t.getNom() %></option>
+            <%  } %> 
+        </select>
     </div>
-    <div class="form-group">
-        <label for="nom">Max:</label>
-        <input type="number" class="form-control" id="nom" name="max" placeholder="Entrez le nom">
-    </div>
+    
     <button type="submit" class="btn btn-primary">Valider</button>
 </form>
 <table class="table">
@@ -33,7 +34,7 @@
              <td><%= m.getNom() %></td>
              <td><%= m.getSalaire() %></td>
              <td><%= m.getAnciennete()%></td>
-             <td><%= m.getPoste() %></td>
+             <td><%= m.getPoste_employe() + " " + m.getGrade() %></td>
         </tr>
       <%  } %>
     </tbody>

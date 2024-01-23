@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import models.Employe;
 import models.Materiel;
 import models.Style;
+import models.TypeEmploye;
 import models.ViewModel;
 import util.DBConnection;
 
@@ -43,14 +44,12 @@ public class ListEmployeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
+        int type = Integer.parseInt(request.getParameter("type"));
          try {
             try (PrintWriter out = response.getWriter()) {
-
-
-
                 ViewModel model = new ViewModel();
                 model.employes = Employe.findAll(null);
-
+                model.typeEmployes = TypeEmploye.findAll(null);
                 model.setError(request.getParameter("error"));
                 request.setAttribute("viewName", "components/listeEmploye.jsp");
                 request.setAttribute("viewTitle", "Listes des employes ");
