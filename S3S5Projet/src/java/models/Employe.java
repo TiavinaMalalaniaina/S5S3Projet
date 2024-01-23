@@ -110,14 +110,13 @@ public class Employe {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "INSERT INTO \"public\".employe (id, nom,type_emplye_id,date_embauche,date_naissance,salaire_base) VALUES (default,?,?,?,?,?) RETURNING id";
+        String sql = "INSERT INTO \"public\".employe (id, nom,type_employe_id,date_embauche,date_naissance,salaire_base) VALUES (default,?,?,default,?,?) RETURNING id";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, this.getNom());
             stmt.setInt(2,this.getType_employe_id());
-            stmt.setDate(3,this.getDateEmbauche());
-            stmt.setDate(4,this.getDate_naissance());
-            stmt.setDouble(5,this.getSalaire_base());
+            stmt.setDate(3,this.getDate_naissance());
+            stmt.setDouble(4,this.getSalaire_base());
       
             
             ResultSet rs = stmt.executeQuery();

@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
         <label for="nom">Salaire de base</label>
-        <input type="date" class="form-control" id="nom" name="salaireBase" placeholder="Saisissez le salaire de base ...">
+        <input type="number" step="2" class="form-control" id="nom" name="salaireBase" placeholder="Saisissez le salaire de base ...">
     </div>
     <div class="form-group">
         <label for="id_label_multiple">

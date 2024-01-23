@@ -7,23 +7,29 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Employe;
-import models.MaterielStock;
+import models.Materiel;
+import models.Style;
+import models.ViewModel;
+import util.DBConnection;
 
 /**
  *
  * @author tiavi
  */
-@WebServlet(name = "SaveEmployeServlet", urlPatterns = {"/SaveEmploye"})
-public class SaveEmployeServlet extends HttpServlet {
+@WebServlet(name = "ListEmployeServlet", urlPatterns = {"/ListEmploye"})
+public class ListEmployeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,27 +41,27 @@ public class SaveEmployeServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            String nom = request.getParameter("nom");
-            String dateNaissance = request.getParameter("dateNaissance");
-            String salaireBase = request.getParameter("salaireBase");
-            String typeEmployeId = request.getParameter("typeEmployeId");
-            
-            Employe ms = new Employe();
-            ms.setNom(nom);
-            ms.setDate_naissance(dateNaissance);
-            ms.setSalaire_base(Double.parseDouble(salaireBase));
-            ms.setType_employe_id(Integer.parseInt(typeEmployeId));
-            ms.save(null);
-            
-            response.sendRedirect("FormEmploye");
-            
-            
+         try {
+            try (PrintWriter out = response.getWriter()) {
+
+
+
+                ViewModel model = new ViewModel();
+                model.employes = Employe.findAll(null);
+
+                model.setError(request.getParameter("error"));
+                request.setAttribute("viewName", "components/listeEmploye.jsp");
+                request.setAttribute("viewTitle", "Listes des employes ");
+                request.setAttribute("title", "STYLE");
+                request.setAttribute("model", model);
+                RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
+                dispatch.forward(request, response);
+            }
         } catch (Exception ex) {
-            ex.printStackTrace();
-//            response.sendRedirect("FormEmploye?error=" + ex.getMessage());
+            Logger.getLogger(ListEmployeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
         }
     }
 
@@ -71,7 +77,11 @@ public class SaveEmployeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListEmployeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -85,7 +95,11 @@ public class SaveEmployeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ListEmployeServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

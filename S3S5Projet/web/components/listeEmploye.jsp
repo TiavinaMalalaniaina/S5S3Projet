@@ -1,3 +1,4 @@
+<%@page import="models.Employe"%>
 <%@page import="models.Meuble"%>
 <%@page import="models.Materiel"%>
 <%@page import="models.Style"%>
@@ -27,11 +28,12 @@
     </tr>
     </thead>
     <tbody>
-        <% for(Meuble meuble : model.meubles){ %>
+        <% for(Employe m : model.employes) { %>
          <tr>
-            <td><%= meuble.getStyleNom() + " " + meuble.getCategorieNom() %></td> 
-            <td><%= meuble.getPrix_petit()%></td> 
-            <td><%= meuble.getPrix_grand()%></td> 
+             <td><%= m.getNom() %></td>
+             <td><%= m.getSalaire() %></td>
+             <td><%= m.getAnciennete()%></td>
+             <td><%= m.getPoste() %></td>
         </tr>
       <%  } %>
     </tbody>
