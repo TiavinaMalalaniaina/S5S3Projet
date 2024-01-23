@@ -60,7 +60,13 @@
                 <a href="#employe" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">EMPLOYE</a>
                 <ul class="collapse list-unstyled" id="employe">
                      <li>
-                        <a href="FormTypeEmploye">Création</a>
+                        <a href="FormTypeEmploye">Création de poste</a>
+                    </li>
+                     <li>
+                        <a href="FormEmploye">Création</a>
+                    </li>
+                     <li>
+                        <a href="ListEmploye">Listes</a>
                     </li>
                 </ul>
             </li>

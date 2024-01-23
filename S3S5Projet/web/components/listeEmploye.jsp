@@ -8,12 +8,19 @@
     ViewModel model = (ViewModel) request.getAttribute("model");
 %>
 
-<form method="GET" action="ListMeubleFiltre">
+<form method="GET" action="ListEmploye">
     <div class="form-group">
-        <select name="type" class="js-example-basic-single form-control" id="id_label_single">
+        <select name="type" class=" form-control" id="id_label_single">
             <% for(TypeEmploye t : model.typeEmployes){ %>
              <option value="<%= t.getId() %>"><%= t.getNom() %></option>
             <%  } %> 
+        </select>
+    </div>
+    <div class="form-group">
+        <select name="poste" class="form-control" id="id_label_single">
+             <option value="1">Ouvrier</option>
+             <option value="2">Senior</option>
+             <option value="3">Expert</option>
         </select>
     </div>
     

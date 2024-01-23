@@ -44,16 +44,21 @@ public class ListEmployeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        int type = Integer.parseInt(request.getParameter("type"));
          try {
             try (PrintWriter out = response.getWriter()) {
                 ViewModel model = new ViewModel();
-                model.employes = Employe.findAll(null);
+                try {
+                    int type = Integer.parseInt(request.getParameter("type"));
+                    int poste = Integer.parseInt(request.getParameter("poste"));
+                    model.employes = Employe.findByTypeEmployeId(null, type);
+                } catch (Exception ex) {
+                    model.employes = Employe.findAll(null);
+                }
                 model.typeEmployes = TypeEmploye.findAll(null);
                 model.setError(request.getParameter("error"));
                 request.setAttribute("viewName", "components/listeEmploye.jsp");
                 request.setAttribute("viewTitle", "Listes des employes ");
-                request.setAttribute("title", "STYLE");
+                request.setAttribute("title", "EMPLOYE");
                 request.setAttribute("model", model);
                 RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
                 dispatch.forward(request, response);
