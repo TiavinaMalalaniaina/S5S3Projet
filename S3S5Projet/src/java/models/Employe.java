@@ -26,6 +26,9 @@ public class Employe {
     Date dateEmbauche;
     Date date_naissance;
     double salaire_base;
+    int anciennete;
+    int poste;
+    double salaire;
 
     public Employe() {
     }
@@ -59,7 +62,7 @@ public class Employe {
          java.util.Date d= format.parse(date_naissance);
          java.sql.Date sqlDate = new java.sql.Date(d.getTime());
          
-         this.setDate_naissance(sqldate);
+         this.setDate_naissance(sqlDate);
     }
      
     public double getSalaire_base() {
@@ -146,6 +149,9 @@ public class Employe {
                employe.setDateEmbauche(rs.getDate("date_embauche"));
                employe.setDate_naissance(rs.getDate("date_naissance"));
                employe.setSalaire_base(rs.getDouble("salaire_base"));
+               employe.setAnciennete(rs.getInt("anciennete"));
+               employe.setPoste(rs.getInt("poste"));
+               employe.setSalaire(rs.getDouble("salaire"));
                employes.add(employe);
                
             }
@@ -155,6 +161,30 @@ public class Employe {
             }
         } 
         return employes;
+    }
+
+    public int getAnciennete() {
+        return anciennete;
+    }
+
+    public void setAnciennete(int anciennete) {
+        this.anciennete = anciennete;
+    }
+
+    public int getPoste() {
+        return poste;
+    }
+
+    public void setPoste(int poste) {
+        this.poste = poste;
+    }
+
+    public double getSalaire() {
+        return salaire;
+    }
+
+    public void setSalaire(double salaire) {
+        this.salaire = salaire;
     }
          
 }
