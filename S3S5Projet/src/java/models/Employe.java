@@ -71,11 +71,17 @@ public class Employe {
         return salaire_base;
     }
 
-    public void setSalaire_base(double salaire_base) {
+    public void setSalaire_base(double salaire_base) throws Exception{
+        if(salaire_base <= 0){
+          throw new Exception("salaire invalide");
+        }
         this.salaire_base = salaire_base;
     }
 
-    public void setNom(String nom) {
+    public void setNom(String nom) throws Exception{
+        if(nom.equals(" ")){
+          throw new Exception("Le nom ne doit pas etre vide");
+        }
         this.nom = nom;
     }
 
