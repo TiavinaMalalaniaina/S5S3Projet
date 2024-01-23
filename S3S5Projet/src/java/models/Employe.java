@@ -78,7 +78,7 @@ public class Employe {
         this.salaire_base = salaire_base;
     }
 
-    public void setNom(String nom) throws Exception{
+    public void setNom(String nom) throws Exception {
         if(nom.equals(" ")){
           throw new Exception("Le nom ne doit pas etre vide");
         }
