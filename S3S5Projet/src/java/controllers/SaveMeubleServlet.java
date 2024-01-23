@@ -35,10 +35,10 @@ public class SaveMeubleServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
          
-        int styleId = Integer.parseInt(request.getParameter("styleId"));
-        int categorieId = Integer.parseInt(request.getParameter("categorieId"));
-        double prixPetit = Double.parseDouble(request.getParameter("prix_vente_petit"));
-        double prixGrand = Double.parseDouble(request.getParameter("prix_vente_grand"));
+        String styleId = request.getParameter("styleId");
+        String categorieId = request.getParameter("categorieId");
+        String prixPetit = request.getParameter("prix_vente_petit");
+        String prixGrand = request.getParameter("prix_vente_grand");
         
         try {
             Meuble meuble = new Meuble();

@@ -50,6 +50,10 @@ public class Categorie {
     public int getId() {
         return id;
     }
+    
+    public void setId(String id) {
+        this.setId(Integer.parseInt(id));
+    }
 
     public void setId(int id) {
         this.id = id;

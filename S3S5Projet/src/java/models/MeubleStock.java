@@ -21,7 +21,9 @@ public class MeubleStock {
     int id;
     int meuble_id;
     double quantite_petit;
+    double quantite_grand;
 
+    
     public int getId() {
         return id;
     }
@@ -34,8 +36,16 @@ public class MeubleStock {
         return meuble_id;
     }
 
+    public void setId(String id) {
+        this.setId(Integer.parseInt(id));
+    }
+    
     public void setMeuble_id(int meuble_id) {
         this.meuble_id = meuble_id;
+    }
+    
+    public void setMeuble_id(String meubleId) {
+        this.setMeuble_id(Integer.parseInt(meubleId));
     }
 
     public double getQuantite_petit() {
@@ -46,6 +56,10 @@ public class MeubleStock {
         this.quantite_petit = quantite_petit;
     }
 
+    public void setQuantite_petit(String quantite) {
+        this.setQuantite_petit(Double.parseDouble(quantite));
+    }
+    
     public double getQuantite_grand() {
         return quantite_grand;
     }
@@ -53,7 +67,10 @@ public class MeubleStock {
     public void setQuantite_grand(double quantite_grand) {
         this.quantite_grand = quantite_grand;
     }
-    double quantite_grand;
+    
+    public void setQuantite_grand(String quantite) {
+        this.setQuantite_grand(Double.parseDouble(quantite));
+    }
 
     public MeubleStock(int meuble_id, double quantite_petit, double quantite_grand) {
         this.meuble_id = meuble_id;

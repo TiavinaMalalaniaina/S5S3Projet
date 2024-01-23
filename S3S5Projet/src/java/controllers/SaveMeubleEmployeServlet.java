@@ -14,9 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Materiel;
 import models.MeubleEmploye;
-import models.TypeEmploye;
 
 /**
  *
@@ -37,10 +35,10 @@ public class SaveMeubleEmployeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int meubleId = Integer.parseInt(request.getParameter("meubleId"));
-        int typeEmployeId = Integer.parseInt(request.getParameter("type_employe_id"));
-        int nbPersonne = Integer.parseInt(request.getParameter("nb_personne"));
-        int heureTravail = Integer.parseInt(request.getParameter("heure_travail"));
+        String meubleId = request.getParameter("meubleId");
+        String typeEmployeId = request.getParameter("type_employe_id");
+        String nbPersonne = request.getParameter("nb_personne");
+        String heureTravail = request.getParameter("heure_travail");
         
         MeubleEmploye model = new MeubleEmploye();
         model.setMeubleId(meubleId);

@@ -39,7 +39,9 @@ public class SaveAddMaterielServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             int materielId = Integer.parseInt(request.getParameter("materielId"));
             double quantite = Double.parseDouble(request.getParameter("quantite"));
-            MaterielStock ms = new MaterielStock(materielId, quantite);
+            MaterielStock ms = new MaterielStock();
+            ms.setMateriel_id(materielId);
+            ms.setQuantite(quantite);
             ms.save(null);
             response.sendRedirect("FormAddMateriel");
             

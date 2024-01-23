@@ -37,11 +37,15 @@ public class SaveMaterielServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
          
         String nom = request.getParameter("nom");
-        double prix = Double.parseDouble(request.getParameter("prix"));
+        String prix = request.getParameter("prix");
        
         Materiel materiel = new Materiel();
-        materiel.setNom(nom);
-        materiel.setPrixUnitaire(prix);
+        try {
+            materiel.setNom(nom);
+            materiel.setPrixUnitaire(prix);
+        } catch (Exception ex) {
+            Logger.getLogger(SaveMaterielServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         try {
             materiel.save(null);

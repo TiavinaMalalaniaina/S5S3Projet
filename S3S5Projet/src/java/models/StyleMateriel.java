@@ -39,6 +39,10 @@ public class StyleMateriel {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public void setId(String id) {
+        this.setId(Integer.parseInt(id));
+    }
 
     public int getIdStyle() {
         return idStyle;
@@ -46,6 +50,10 @@ public class StyleMateriel {
 
     public void setIdStyle(int id_meubleType) {
         this.idStyle = id_meubleType;
+    }
+    
+    public void setIdStyle(String idStyle) {
+        this.setIdStyle(Integer.parseInt(idStyle));
     }
 
     public int getIdMateriel() {
@@ -56,7 +64,7 @@ public class StyleMateriel {
         this.idMateriel = idMateriel;
     }
     
-     public void setIdMateriel(String nomMateriel){
+    public void setIdMateriel(String nomMateriel){
          int idMateriel = Integer.parseInt(nomMateriel);
          this.setIdMateriel(idMateriel);
     }

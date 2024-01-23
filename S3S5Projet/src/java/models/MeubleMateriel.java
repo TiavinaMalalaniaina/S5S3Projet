@@ -73,6 +73,10 @@ public class MeubleMateriel {
     public void setMaterielId(int materielId) {
         this.materielId = materielId;
     }
+    
+    public void setMaterielId(String materielId) {
+        this.setMaterielId(Integer.parseInt(materielId));
+    }
 
     public int getId() {
         return id;
@@ -80,6 +84,10 @@ public class MeubleMateriel {
 
     public void setId(int id) {
         this.id = id;
+    }
+    
+    public void setId(String id) {
+        this.setId(id);
     }
 
     public int getMeubleId() {
@@ -89,6 +97,10 @@ public class MeubleMateriel {
     public void setMeubleId(int meubleId) {
         this.meubleId = meubleId;
     }
+    
+    public void setMeubleId(String meubleId) {
+        this.setMeubleId(Integer.parseInt(meubleId));
+    }
 
     public int getMeubleMaterielId() {
         return materielId;
@@ -96,6 +108,10 @@ public class MeubleMateriel {
 
     public void setMeubleMaterielId(int materielId) {
         this.materielId = materielId;
+    }
+    
+    public void setMeubleMaterielId(String materielId) {
+        this.setMeubleMaterielId(Integer.parseInt(materielId));
     }
 
     public double getPetit() {
@@ -105,6 +121,10 @@ public class MeubleMateriel {
     public void setPetit(double petit) {
         this.petit = petit;
     }
+    
+    public void setPetit(String petit) {
+        this.setPetit(Double.parseDouble(petit));
+    }
 
     public double getGrand() {
         return grand;
@@ -112,6 +132,10 @@ public class MeubleMateriel {
 
     public void setGrand(double grand) {
         this.grand = grand;
+    }
+    
+    public void setGrand(String grand) {
+        this.setGrand(Double.parseDouble(grand));
     }
     
      public static List<MeubleMateriel> findByType(Connection connection,int id) throws SQLException, Exception {

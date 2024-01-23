@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Meuble;
+import models.MeubleMateriel;
 
 /**
  *
@@ -38,7 +39,11 @@ public class SaveBuildMeubleServlet extends HttpServlet {
             int petit = Integer.parseInt(request.getParameter("petit"));
             int grand = Integer.parseInt(request.getParameter("grand"));
             Meuble meuble = new Meuble();
+            MeubleMateriel model = new MeubleMateriel();
             try {
+                model.setMeubleId(meubleId);
+                model.setPetit(petit);
+                model.setGrand(grand);
                 meuble.buildMeuble(meubleId, petit, grand);
                 response.sendRedirect("FormBuildMeuble");
             } catch (Exception ex) {

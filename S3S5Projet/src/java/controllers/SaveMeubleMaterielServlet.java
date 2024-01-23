@@ -14,7 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Materiel;
 import models.MeubleMateriel;
 
 /**
@@ -37,10 +36,10 @@ public class SaveMeubleMaterielServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
          
-        int meubleId = Integer.parseInt(request.getParameter("meubleId"));
-        int materielId = Integer.parseInt(request.getParameter("materielId"));
-        double petit = Double.parseDouble(request.getParameter("petit"));
-        double grand = Double.parseDouble(request.getParameter("grand"));
+        String meubleId = request.getParameter("meubleId");
+        String materielId = request.getParameter("materielId");
+        String petit = request.getParameter("petit");
+        String grand = request.getParameter("grand");
        
         MeubleMateriel model = new MeubleMateriel();
         model.setMaterielId(materielId);

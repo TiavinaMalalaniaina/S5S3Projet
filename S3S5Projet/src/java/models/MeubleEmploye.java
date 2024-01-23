@@ -44,7 +44,6 @@ public class MeubleEmploye {
         } 
     }
     
-    
 
     public int getId() {
         return id;
@@ -53,9 +52,17 @@ public class MeubleEmploye {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public void setId(String id) {
+        this.setId(Integer.parseInt(id));
+    }
 
     public int getMeubleId() {
         return meubleId;
+    }
+    
+    public void setMeubleId(String meubleId) {
+        this.setMeubleId(Integer.parseInt(meubleId));
     }
 
     public void setMeubleId(int meubleId) {
@@ -69,6 +76,10 @@ public class MeubleEmploye {
     public void setTypeEmployeId(int typeEmployeId) {
         this.typeEmployeId = typeEmployeId;
     }
+    
+    public void setTypeEmployeId(String typeEmployeId) {
+        this.setTypeEmployeId(Integer.parseInt(typeEmployeId));
+    }
 
     public int getHeureTravail() {
         return heureTravail;
@@ -77,6 +88,10 @@ public class MeubleEmploye {
     public void setHeureTravail(int heureTravail) {
         this.heureTravail = heureTravail;
     }
+    
+    public void setHeureTravail(String heureTravail) {
+        this.setHeureTravail(Integer.parseInt(heureTravail));
+    }
 
     public int getNbPersonne() {
         return nbPersonne;
@@ -84,6 +99,10 @@ public class MeubleEmploye {
 
     public void setNbPersonne(int nbPersonne) {
         this.nbPersonne = nbPersonne;
+    }
+    
+    public void setNbPersonne(String nbPersonne) {
+        this.setNbPersonne(Integer.parseInt(nbPersonne));
     }
 
     

@@ -76,6 +76,10 @@ public class TypeEmploye {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public void setId(String id) {
+        this.setId(Integer.parseInt(id));
+    }
 
     public String getNom() {
         return nom;
@@ -91,6 +95,10 @@ public class TypeEmploye {
 
     public void setSalaire(double salaire) {
         this.salaire = salaire;
+    }
+    
+    public void setSalaire(String salaire) {
+        this.setSalaire(Double.parseDouble(salaire));
     }
     
     

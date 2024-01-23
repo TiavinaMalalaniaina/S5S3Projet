@@ -38,7 +38,7 @@ public class SaveTypeEmployeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
          
         String nom = request.getParameter("nom");
-        double prix = Double.parseDouble(request.getParameter("salaire"));
+        String prix = request.getParameter("salaire");
        
         TypeEmploye materiel = new TypeEmploye();
         materiel.setNom(nom);

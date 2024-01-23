@@ -40,6 +40,10 @@ public class Meuble {
     public double getPrix_petit() {
         return prix_petit;
     }
+    
+    public void setPrix_petit(String prix_petit) {
+        this.setPrix_petit(Double.parseDouble(prix_petit));
+    }
 
     public void setPrix_petit(double prix_petit) {
         this.prix_petit = prix_petit;
@@ -47,6 +51,10 @@ public class Meuble {
 
     public double getPrix_grand() {
         return prix_grand;
+    }
+    
+    public void setPrix_grand(String prix_grand) {
+        this.setPrix_grand(Double.parseDouble(prix_grand));
     }
 
     public void setPrix_grand(double prix_grand) {
@@ -116,7 +124,7 @@ public class Meuble {
         return models;
     }
 
-    public static List<Meuble> findByMateriel(Connection connection, int materielId) throws SQLException {
+    public static List<Meuble> findByMateriel(Connection connection, int materielId) throws Exception {
         List<Meuble> models = new ArrayList<>();
         boolean wasConnected = true;
         if (connection == null) {
@@ -180,7 +188,7 @@ public class Meuble {
      }
      
      
-        public List<Meuble> findAllWithQuantite(Connection connection) throws SQLException{
+        public List<Meuble> findAllWithQuantite(Connection connection) throws Exception{
             List<Meuble> models = new ArrayList<>();
         boolean wasConnected = true;
         if (connection == null) {
@@ -282,6 +290,10 @@ public class Meuble {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public void setId(String id) {
+        this.setId(Integer.parseInt(id));
+    }
 
     public int getStyleId() {
         return styleId;
@@ -290,6 +302,10 @@ public class Meuble {
     public void setStyleId(int styleId) {
         this.styleId = styleId;
     }
+    
+    public void setStyleId(String styleId) {
+        this.setStyleId(Integer.parseInt(styleId));
+    }
 
     public int getCategorieId() {
         return categorieId;
@@ -297,6 +313,10 @@ public class Meuble {
 
     public void setCategorieId(int categorieId) {
         this.categorieId = categorieId;
+    }
+    
+    public void setCategorieId(String categorieId) {
+        this.setCategorieId(Integer.parseInt(categorieId));
     }
 
     public List<Materiel> getMateriels() {
@@ -327,16 +347,26 @@ public class Meuble {
         return petit;
     }
 
-    public void setPetit(double petit) {
+    public void setPetit(double petit) throws Exception {
+        if (petit < 0) throw new Exception("La quantité petit ne peut pas être négatif");
         this.petit = petit;
+    }
+    
+    public void setPetit(String petit) throws Exception {
+        this.setPetit(Double.parseDouble(petit));
     }
 
     public double getGrand() {
         return grand;
     }
 
-    public void setGrand(double grand) {
+    public void setGrand(double grand) throws Exception {
+        if (petit < 0) throw new Exception("La quantité grand ne peut pas être négatif");
         this.grand = grand;
+    }
+    
+    public void setGrand(String grand) throws Exception {
+        this.setGrand(Double.parseDouble(grand));
     }
 
     public double getBenefice_petit() {

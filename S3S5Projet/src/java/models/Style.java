@@ -6,12 +6,9 @@
 package models;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import util.DBConnection;
@@ -41,6 +38,10 @@ public class Style {
     public void setId(int id) {
         this.id = id;
     }
+    
+    public void setId(String id) {
+        this.setId(Integer.parseInt(id));
+    }
 
     public String getNom() {
         return nom;
@@ -49,7 +50,7 @@ public class Style {
     public void setNom(String nom) {
         this.nom = nom;
     }
-
+    
     public List<Materiel> getMateriaux() {
         return materiaux;
     }

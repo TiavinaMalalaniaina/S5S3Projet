@@ -33,19 +33,30 @@ public class MaterielStock {
         this.quantite = quantite;
     }
 
+    public MaterielStock() {
+    }
+
     
     public int getId() {
         return id;
+    }
+    
+    public void setId(String id) {
+        this.setId(Integer.parseInt(id));
     }
 
     public void setId(int id) {
         this.id = id;
     }
-
+    
     public int getMateriel_id() {
         return materiel_id;
     }
 
+    public void setMateriel_id(String materielId) {
+        this.setMateriel_id(Integer.parseInt(materielId));
+    }
+    
     public void setMateriel_id(int materiel_id) {
         this.materiel_id = materiel_id;
     }
@@ -53,12 +64,16 @@ public class MaterielStock {
     public double getQuantite() {
         return quantite;
     }
+    
+    public void setQuantite(String quantite) {
+        this.setQuantite(Double.parseDouble(quantite));
+    }
 
     public void setQuantite(double quantite) {
         this.quantite = quantite;
     }
     
-       public void save(Connection connection) throws SQLException {
+    public void save(Connection connection) throws SQLException {
         boolean wasConnected = true;
         if (connection == null) {
             wasConnected = false;

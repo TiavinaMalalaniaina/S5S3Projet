@@ -26,9 +26,34 @@ public class Materiel {
     String nom;
     double prixUnitaire;
     double quantite;
+    
+    public int getId() {
+        return id;
+    }
+    
+    public void setId(String id) {
+        this.setId(Integer.parseInt(id));
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) throws Exception {
+        if (nom.equals("")) throw new Exception("Nom ne peut pas être vide");
+        this.nom = nom;
+    }
 
     public double getQuantite() {
         return quantite;
+    }
+    
+    public void setQuantite(String quantite) {
+        this.setQuantite(Double.parseDouble(quantite));
     }
 
     public void setQuantite(double quantite) {
@@ -38,8 +63,13 @@ public class Materiel {
     public double getPrixUnitaire() {
         return prixUnitaire;
     }
+    
+    public void setPrixUnitaire(String prixUnitaire) throws Exception {
+        this.setPrixUnitaire(Double.parseDouble(prixUnitaire));
+    }
 
-    public void setPrixUnitaire(double prixUnitaire) {
+    public void setPrixUnitaire(double prixUnitaire) throws Exception {
+        if (prixUnitaire <= 0) throw new Exception("Le prix unitaire ne peut pas être négatifs");
         this.prixUnitaire = prixUnitaire;
     }
     
@@ -63,21 +93,7 @@ public class Materiel {
         this.prixUnitaire = prixUnitaire;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+    
     
     public List<Materiel> findByMeubleId(Connection connection) {
         return new ArrayList<>();
