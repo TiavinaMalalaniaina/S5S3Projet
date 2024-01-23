@@ -41,7 +41,11 @@ public class ListeStockMeubleServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             ViewModel model = new ViewModel();
-            model.meubles = new Meuble().findAllWithQuantite(null);
+            try {
+                model.meubles = new Meuble().findAllWithQuantite(null);
+            } catch (Exception ex) {
+                Logger.getLogger(ListeStockMeubleServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
             model.setError(request.getParameter("error"));
             request.setAttribute("viewName", "components/listeStockMeuble.jsp");
             request.setAttribute("title", "MEUBLE");
@@ -49,7 +53,7 @@ public class ListeStockMeubleServlet extends HttpServlet {
             request.setAttribute("model", model);
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(ListeStockMeubleServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
