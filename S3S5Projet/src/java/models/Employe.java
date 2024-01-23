@@ -29,6 +29,7 @@ public class Employe {
     int anciennete;
     int poste;
     double salaire;
+    String poste_employe;
 
     public Employe() {
     }
@@ -89,6 +90,15 @@ public class Employe {
         return dateEmbauche;
     }
 
+    public String getPoste_employe() {
+        return poste_employe;
+    }
+
+    public void setPoste_employe(String poste_employe) {
+        this.poste_employe = poste_employe;
+    }
+    
+    
     public void setDateEmbauche(Date dateEmbauche) {
         this.dateEmbauche = dateEmbauche;
     }
@@ -136,7 +146,7 @@ public class Employe {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "SELECT * FROM employe";
+        String sql = "SELECT * FROM v_employe_detailled";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
@@ -151,6 +161,7 @@ public class Employe {
                employe.setAnciennete(rs.getInt("anciennete"));
                employe.setPoste(rs.getInt("poste"));
                employe.setSalaire(rs.getDouble("salaire"));
+               employe.setPoste_employe(rs.getString("poste_employe"));
                employes.add(employe);
                
             }
@@ -161,6 +172,23 @@ public class Employe {
         } 
         return employes;
     }
+      
+      public String getGrade(){
+          String poste = "";
+             if(this.getPoste() == 1){
+                 poste = "ouvrier";
+             }
+             else if(this.getPoste() == 2){
+                 poste = "senior";
+             }
+             else if(this.getPoste() == 3){
+                 poste = "expert";
+             }
+             else{
+                poste = "";
+             }
+            return poste;  
+      }
 
     public int getAnciennete() {
         return anciennete;
