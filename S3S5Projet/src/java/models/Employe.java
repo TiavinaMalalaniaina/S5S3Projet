@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import util.DBConnection;
@@ -46,10 +47,22 @@ public class Employe {
         return date_naissance;
     }
 
-    public void setDate_naissance(Date date_naissance) {
+    public void setDate_naissance(Date date_naissance) throws Exception {
+        if((2024- date_naissance.getYear()) < 18){
+            throw  new Exception("Age invalide");
+        }
         this.date_naissance = date_naissance;
     }
-
+    
+     public void setDate_naissance(String date_naissance) throws Exception {
+         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");
+         
+         java.util.Date d= format.parse(date_naissance);
+         java.sql.Date sqlDate = new java.sql.Date(d.getTime());
+         
+         this.setDate_naissance(sqldate);
+    }
+     
     public double getSalaire_base() {
         return salaire_base;
     }
