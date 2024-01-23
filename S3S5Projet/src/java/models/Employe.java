@@ -211,6 +211,45 @@ public class Employe {
         } 
         return employes;
     }
+       
+         public static List<Employe> findByTypeEmployePoste(Connection connection,int id,int poste) throws SQLException, Exception {
+          
+        List<Employe> employes = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = DBConnection.getConnection();
+        }
+        String sql = "SELECT * FROM v_employe_detailled where type_employe_id = ? and poste = ?";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.setInt(2, poste);
+            
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+               Employe employe = new Employe();
+               employe.setId(rs.getInt("id"));
+               employe.setNom(rs.getString("nom"));
+               employe.setType_employe_id(rs.getInt("type_employe_id"));
+               employe.setDateEmbauche(rs.getDate("date_embauche"));
+               employe.setDate_naissance(rs.getDate("date_naissance"));
+               employe.setSalaire_base(rs.getDouble("salaire_base"));
+               employe.setAnciennete(rs.getInt("anciennete"));
+               employe.setPoste(rs.getInt("poste"));
+               employe.setSalaire(rs.getDouble("salaire"));
+               employe.setPoste_employe(rs.getString("poste_employe"));
+               employes.add(employe);
+               
+            }
+        } finally {
+            if (!wasConnected) {
+                connection.close();
+            }
+        } 
+        return employes;
+    }
+         
       
       public String getGrade(){
           String poste = "";
