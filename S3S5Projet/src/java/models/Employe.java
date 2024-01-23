@@ -26,8 +26,7 @@ public class Employe {
     Date date_naissance;
     double salaire_base;
 
-    private Employe() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Employe() {
     }
 
     public int getId() {
