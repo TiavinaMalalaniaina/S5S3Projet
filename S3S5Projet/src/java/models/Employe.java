@@ -152,7 +152,7 @@ public class Employe {
                employe.setSalaire_base(rs.getDouble("salaire_base"));
                employe.setAnciennete(rs.getInt("anciennete"));
                employe.setPoste(rs.getInt("poste"));
-               employe.setSalaire("salaire");
+               employe.setSalaire(rs.getDouble("salaire"));
                employes.add(employe);
                
             }
