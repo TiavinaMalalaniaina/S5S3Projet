@@ -40,12 +40,14 @@ public class SaveEmployeServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String nom = request.getParameter("nom");
             String dateNaissance = request.getParameter("dateNaissance");
+            String dateEmbauche = request.getParameter("dateEmbauche");
             String salaireBase = request.getParameter("salaireBase");
             String typeEmployeId = request.getParameter("typeEmployeId");
             try {
                 Employe ms = new Employe();
                 ms.setNom(nom);
                 ms.setDate_naissance(dateNaissance);
+                ms.setDateEmbauche(dateEmbauche);
                 ms.setSalaire_base(Double.parseDouble(salaireBase));
                 ms.setType_employe_id(Integer.parseInt(typeEmployeId));
                 ms.save(null);

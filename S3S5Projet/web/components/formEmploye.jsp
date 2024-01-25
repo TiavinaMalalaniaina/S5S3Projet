@@ -5,7 +5,7 @@
     ViewModel model = (ViewModel) request.getAttribute("model");
 %>
 
-<form method="POST" action="SaveEmploye">
+<form method="GET" action="SaveEmploye">
     <div class="form-group">
         <label for="nom">Nom: </label>
         <input type="text" class="form-control" id="nom" name="nom" placeholder="Saisissez le nom ...">
@@ -13,6 +13,10 @@
     <div class="form-group">
         <label for="nom">Date de naissance</label>
         <input type="date" class="form-control" id="nom" name="dateNaissance" placeholder="Saisissez la date de naissance ...">
+    </div>
+    <div class="form-group">
+        <label for="nom">Date d'embauche</label>
+        <input type="date" class="form-control" id="nom" name="dateEmbauche" placeholder="Saisissez la date de naissance ...">
     </div>
     <div class="form-group">
         <label for="nom">Salaire de base</label>

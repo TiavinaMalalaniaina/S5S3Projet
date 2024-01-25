@@ -34,6 +34,13 @@ public class Employe {
     double salaire;
     String poste_employe;
 
+    @Override
+    public String toString() {
+        return "Employe{" + "id=" + id + ", nom=" + nom + ", type_employe_id=" + type_employe_id + ", dateEmbauche=" + dateEmbauche + ", date_naissance=" + date_naissance + ", salaire_base=" + salaire_base + ", anciennete=" + anciennete + ", poste=" + poste + ", salaire=" + salaire + ", poste_employe=" + poste_employe + '}';
+    }
+    
+    
+
     public Employe() {
     }
 
@@ -61,15 +68,7 @@ public class Employe {
     }
     
      public void setDate_naissance(String date_naissance) throws SQLException {
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");
-        java.sql.Date sqlDate = null;
-        try {
-            java.util.Date d= format.parse(date_naissance);
-            sqlDate = new java.sql.Date(d.getTime());
-         } catch (Exception ex) {
-             throw new SQLException("unparsable DATE");
-         }
-        this.setDate_naissance(sqlDate);
+        this.setDate_naissance(Date.valueOf(date_naissance));
          
     }
      
@@ -115,6 +114,9 @@ public class Employe {
     public void setDateEmbauche(Date dateEmbauche) {
         this.dateEmbauche = dateEmbauche;
     }
+    public void setDateEmbauche(String dateEmbauche) throws SQLException {
+        this.setDateEmbauche(Date.valueOf(dateEmbauche));
+    }
 
     public Employe(String nom, int type_employe_id, Date dateEmbauche, Date date_naissance, double salaire_base) {
         this.nom = nom;
@@ -133,13 +135,14 @@ public class Employe {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "INSERT INTO \"public\".employe (id, nom,type_employe_id,date_embauche,date_naissance,salaire_base) VALUES (default,?,?,default,?,?) RETURNING id";
+        String sql = "INSERT INTO \"public\".employe (id, nom,type_employe_id,date_embauche,date_naissance,salaire_base) VALUES (default,?,?,?,?,?) RETURNING id";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, this.getNom());
             stmt.setInt(2,this.getType_employe_id());
-            stmt.setDate(3,this.getDate_naissance());
-            stmt.setDouble(4,this.getSalaire_base());
+            stmt.setDate(3,this.getDateEmbauche());
+            stmt.setDate(4,this.getDate_naissance());
+            stmt.setDouble(5,this.getSalaire_base());
       
             
             ResultSet rs = stmt.executeQuery();
@@ -311,5 +314,6 @@ public class Employe {
         Period p = Period.between(d1, current);
         return p.getYears();
     }
+    
     
 }

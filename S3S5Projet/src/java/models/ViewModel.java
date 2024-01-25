@@ -25,6 +25,7 @@ public class ViewModel {
     public List<TypeEmploye> typeEmployes = new ArrayList<>();
     public List<Employe> employes = new ArrayList<>();
     public int meubleId = 0;
+    public List<Grade> grades = new ArrayList<>();
     
     String error;
     

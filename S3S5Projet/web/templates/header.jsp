@@ -68,6 +68,9 @@
                      <li>
                         <a href="ListEmploye">Listes</a>
                     </li>
+                     <li>
+                        <a href="FormGrade">Graduation</a>
+                    </li>
                 </ul>
             </li>
         </ul>

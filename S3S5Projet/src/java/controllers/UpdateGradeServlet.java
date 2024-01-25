@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import models.Employe;
+import models.Grade;
 import models.MaterielStock;
 
 /**
@@ -37,17 +38,16 @@ public class UpdateGradeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            String id = request.getParameter("id");
-            String annee = request.getParameter("annee");
-            String tauxHoraire = request.getParameter("taux_horaire");
-            try {
-                
-                response.sendRedirect("FormGrade");
-            } catch(Exception ex) {
-                Logger.getLogger(SaveMeubleEmployeServlet.class.getName()).log(Level.SEVERE, null, ex);
-                response.sendRedirect("FormGrade?error=" + ex.getMessage());
-            }
+        String id = request.getParameter("id");
+        String annee = request.getParameter("annee");
+        String tauxHoraire = request.getParameter("taux_horaire");
+        try {
+            Grade grade = new Grade(id, null, annee, tauxHoraire);
+            grade.update(Integer.parseInt(id), null);
+            response.sendRedirect("FormGrade");
+        } catch(Exception ex) {
+            Logger.getLogger(SaveMeubleEmployeServlet.class.getName()).log(Level.SEVERE, null, ex);
+            response.sendRedirect("FormGrade?error=" + ex.getMessage());
         }
     }
 

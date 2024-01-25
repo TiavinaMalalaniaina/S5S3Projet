@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Grade;
 import models.ViewModel;
 
 /**
@@ -34,15 +35,18 @@ public class FormGradeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             ViewModel model = new ViewModel();
             model.setError(request.getParameter("error"));
+            model.grades = Grade.findAll(null);
             request.setAttribute("viewName", "components/formGrade.jsp");
             request.setAttribute("title", "GRADE");
             request.setAttribute("viewTitle", "Mettre à jour les grades");
             request.setAttribute("model", model);
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
