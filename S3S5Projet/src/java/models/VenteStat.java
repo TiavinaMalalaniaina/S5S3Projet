@@ -136,6 +136,34 @@ public class VenteStat {
         return ventes;
     }
       
+        public static List<VenteStat> findVenteStat(Connection connection) throws SQLException, Exception {
+        List<VenteStat> ventes = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = DBConnection.getConnection();
+        }
+        String sql = "SELECT * FROM v_vente_stat_all";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+               VenteStat vente = new VenteStat();
+              
+               vente.setGenre_id(rs.getString("genre_id"));
+               vente.setQuantite(rs.getString("quantite"));
+               
+               ventes.add(vente);
+              
+            }
+        } finally {
+            if (!wasConnected) {
+                connection.close();
+            }
+        } 
+        return ventes;
+    }
+      
         public static List<VenteStat> findByMeubleId(Connection connection,int id) throws SQLException, Exception {
         List<VenteStat> ventes = new ArrayList<>();
         boolean wasConnected = true;
