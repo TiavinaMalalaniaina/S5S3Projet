@@ -22,8 +22,8 @@ import models.MaterielStock;
  *
  * @author tiavi
  */
-@WebServlet(name = "SaveEmployeServlet", urlPatterns = {"/SaveEmploye"})
-public class SaveEmployeServlet extends HttpServlet {
+@WebServlet(name = "UpdateGradeServlet", urlPatterns = {"/UpdateGrade"})
+public class UpdateGradeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,21 +38,15 @@ public class SaveEmployeServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String nom = request.getParameter("nom");
-            String dateNaissance = request.getParameter("dateNaissance");
-            String salaireBase = request.getParameter("salaireBase");
-            String typeEmployeId = request.getParameter("typeEmployeId");
+            String id = request.getParameter("id");
+            String annee = request.getParameter("annee");
+            String tauxHoraire = request.getParameter("taux_horaire");
             try {
-                Employe ms = new Employe();
-                ms.setNom(nom);
-                ms.setDate_naissance(dateNaissance);
-                ms.setSalaire_base(Double.parseDouble(salaireBase));
-                ms.setType_employe_id(Integer.parseInt(typeEmployeId));
-                ms.save(null);
-                response.sendRedirect("FormEmploye");
+                
+                response.sendRedirect("FormGrade");
             } catch(Exception ex) {
                 Logger.getLogger(SaveMeubleEmployeServlet.class.getName()).log(Level.SEVERE, null, ex);
-                response.sendRedirect("FormEmploye?error=" + ex.getMessage());
+                response.sendRedirect("FormGrade?error=" + ex.getMessage());
             }
         }
     }

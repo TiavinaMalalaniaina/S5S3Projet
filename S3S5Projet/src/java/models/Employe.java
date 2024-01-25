@@ -10,7 +10,10 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import util.DBConnection;
@@ -50,36 +53,40 @@ public class Employe {
         return date_naissance;
     }
 
-    public void setDate_naissance(Date date_naissance) throws Exception {
-        if((2024- date_naissance.getYear()) < 18){
-            throw  new Exception("Age invalide");
+    public void setDate_naissance(Date date_naissance) throws SQLException {
+        if(getAge(date_naissance) < 18){
+            throw  new SQLException("Age invalide");
         }
         this.date_naissance = date_naissance;
     }
     
-     public void setDate_naissance(String date_naissance) throws Exception {
-         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");
+     public void setDate_naissance(String date_naissance) throws SQLException {
+        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD");
+        java.sql.Date sqlDate = null;
+        try {
+            java.util.Date d= format.parse(date_naissance);
+            sqlDate = new java.sql.Date(d.getTime());
+         } catch (Exception ex) {
+             throw new SQLException("unparsable DATE");
+         }
+        this.setDate_naissance(sqlDate);
          
-         java.util.Date d= format.parse(date_naissance);
-         java.sql.Date sqlDate = new java.sql.Date(d.getTime());
-         
-         this.setDate_naissance(sqlDate);
     }
      
     public double getSalaire_base() {
         return salaire_base;
     }
 
-    public void setSalaire_base(double salaire_base) throws Exception{
+    public void setSalaire_base(double salaire_base) throws SQLException{
         if(salaire_base <= 0){
-          throw new Exception("salaire invalide");
+          throw new SQLException("salaire invalide");
         }
         this.salaire_base = salaire_base;
     }
 
-    public void setNom(String nom) throws Exception {
-        if(nom.equals(" ")){
-          throw new Exception("Le nom ne doit pas etre vide");
+    public void setNom(String nom) throws SQLException {
+        if(nom.trim().equals("")){
+          throw new SQLException("Le nom ne doit pas etre vide");
         }
         this.nom = nom;
     }
@@ -257,18 +264,20 @@ public class Employe {
       
       public String getGrade(){
           String poste = "";
-             if(this.getPoste() == 1){
-                 poste = "ouvrier";
-             }
-             else if(this.getPoste() == 2){
-                 poste = "senior";
-             }
-             else if(this.getPoste() == 3){
-                 poste = "expert";
-             }
-             else{
+        switch (this.getPoste()) {
+            case 1:
+                poste = "ouvrier";
+                break;
+            case 2:
+                poste = "senior";
+                break;
+            case 3:
+                poste = "expert";
+                break;
+            default:
                 poste = "";
-             }
+                break;
+        }
             return poste;  
       }
 
@@ -296,4 +305,11 @@ public class Employe {
         this.salaire = salaire;
     }
          
+    private int getAge(Date date) {
+        LocalDate d1 = date.toLocalDate();
+        LocalDate current = LocalDate.now();
+        Period p = Period.between(d1, current);
+        return p.getYears();
+    }
+    
 }

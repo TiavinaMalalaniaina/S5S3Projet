@@ -50,7 +50,7 @@ public class ListEmployeServlet extends HttpServlet {
                 try {
                     int type = Integer.parseInt(request.getParameter("type"));
                     int poste = Integer.parseInt(request.getParameter("poste"));
-                    model.employes = Employe.findByTypeEmployeId(null, type);
+                    model.employes = Employe.findByTypeEmployePoste(null, type, poste);
                 } catch (Exception ex) {
                     model.employes = Employe.findAll(null);
                 }

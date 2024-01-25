@@ -30,18 +30,22 @@
     <thead>
     <tr>
         <th>Nom & prénom</th>
+        <th>Salaire de base</th>
         <th>Salaire</th>
         <th>Ancienneté</th>
         <th>Poste</th>
+        <th>Date d'embauche</th>
     </tr>
     </thead>
     <tbody>
         <% for(Employe m : model.employes) { %>
          <tr>
              <td><%= m.getNom() %></td>
-             <td><%= m.getSalaire() %></td>
+             <td><%= m.getSalaire_base()%> AR</td>
+             <td><%= m.getSalaire() %> AR</td>
              <td><%= m.getAnciennete()%></td>
              <td><%= m.getPoste_employe() + " " + m.getGrade() %></td>
+             <td><%= m.getDateEmbauche() %></td>
         </tr>
       <%  } %>
     </tbody>
