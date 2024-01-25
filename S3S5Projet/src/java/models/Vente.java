@@ -29,40 +29,40 @@ public class Vente {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = Integer.parseInt(id);
     }
 
     public int getClient_id() {
         return client_id;
     }
 
-    public void setClient_id(int client_id) {
-        this.client_id = client_id;
+    public void setClient_id(String client_id) {
+        this.client_id = Integer.parseInt(client_id);
     }
 
     public int getMeuble_id() {
         return meuble_id;
     }
 
-    public void setMeuble_id(int meuble_id) {
-        this.meuble_id = meuble_id;
+    public void setMeuble_id(String meuble_id) {
+        this.meuble_id = Integer.parseInt(meuble_id);
     }
 
     public int getTaille() {
         return taille;
     }
 
-    public void setTaille(int taille) {
-        this.taille = taille;
+    public void setTaille(String taille) {
+        this.taille = Integer.parseInt(taille);
     }
 
     public int getQuantite() {
         return quantite;
     }
 
-    public void setQuantite(int quantite) {
-        this.quantite = quantite;
+    public void setQuantite(String quantite) {
+        this.quantite = Integer.parseInt(quantite);
     }
 
   
@@ -83,7 +83,7 @@ public class Vente {
             stmt.setInt(4, this.getQuantite());
             
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) this.setId(rs.getInt("id"));
+            if (rs.next()) this.setId(rs.getString("id"));
         } finally {
             if (!wasConnected) {
                 connection.close();
@@ -105,11 +105,11 @@ public class Vente {
             while (rs.next()) {
                Vente vente = new Vente();
               
-               vente.setId(rs.getInt("id"));
-               vente.setClient_id(rs.getInt("client_id"));
-               vente.setMeuble_id(rs.getInt("meuble_id"));
-               vente.setTaille(rs.getInt("taille"));
-               vente.setQuantite(rs.getInt("quantite"));
+               vente.setId(rs.getString("id"));
+               vente.setClient_id(rs.getString("client_id"));
+               vente.setMeuble_id(rs.getString("meuble_id"));
+               vente.setTaille(rs.getString("taille"));
+               vente.setQuantite(rs.getString("quantite"));
             }
         } finally {
             if (!wasConnected) {

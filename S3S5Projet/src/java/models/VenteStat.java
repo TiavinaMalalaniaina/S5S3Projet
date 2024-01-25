@@ -32,48 +32,48 @@ public class VenteStat {
         return meuble_id;
     }
 
-    public void setMeuble_id(int meuble_id) {
-        this.meuble_id = meuble_id;
+    public void setMeuble_id(String meuble_id) {
+        this.meuble_id = Integer.parseInt(style_nom);
     }
 
     public int getGenre_id() {
         return genre_id;
     }
 
-    public void setGenre_id(int genre_id) {
-        this.genre_id = genre_id;
+    public void setGenre_id(String genre_id) {
+        this.genre_id = Integer.parseInt(genre_id);
     }
 
     public int getTaille() {
         return taille;
     }
 
-    public void setTaille(int taille) {
-        this.taille = taille;
+    public void setTaille(String taille) {
+        this.taille = Integer.parseInt(taille);
     }
 
     public int getQuantite() {
         return quantite;
     }
 
-    public void setQuantite(int quantite) {
-        this.quantite = quantite;
+    public void setQuantite(String quantite) {
+        this.quantite = Integer.parseInt(quantite);
     }
 
     public int getCategorie_id() {
         return categorie_id;
     }
 
-    public void setCategorie_id(int categorie_id) {
-        this.categorie_id = categorie_id;
+    public void setCategorie_id(String categorie_id) {
+        this.categorie_id = Integer.parseInt(style_nom);
     }
 
     public int getStyle_id() {
         return style_id;
     }
 
-    public void setStyle_id(int style_id) {
-        this.style_id = style_id;
+    public void setStyle_id(String style_id) {
+        this.style_id = Integer.parseInt(style_id);
     }
 
     public String getStyle_nom() {
@@ -96,8 +96,8 @@ public class VenteStat {
         return prix_vente;
     }
 
-    public void setPrix_vente(double prix_vente) {
-        this.prix_vente = prix_vente;
+    public void setPrix_vente(String prix_vente) {
+        this.prix_vente = Double.parseDouble(style_nom);
     }
     
    
@@ -116,15 +116,16 @@ public class VenteStat {
             while (rs.next()) {
                VenteStat vente = new VenteStat();
               
-               vente.setMeuble_id(rs.getInt("meuble_id"));
-               vente.setGenre_id(rs.getInt("genre_id"));
-               vente.setTaille(rs.getInt("taille"));
-               vente.setQuantite(rs.getInt("quantite"));
-               vente.setCategorie_id(rs.getInt("categorie_id"));
-               vente.setStyle_id(rs.getInt("style_id"));
+               vente.setMeuble_id(rs.getString("meuble_id"));
+               vente.setGenre_id(rs.getString("genre_id"));
+               vente.setTaille(rs.getString("taille"));
+               vente.setQuantite(rs.getString("quantite"));
+               vente.setCategorie_id(rs.getString("categorie_id"));
+               vente.setStyle_id(rs.getString("style_id"));
                vente.setStyle_nom(rs.getString("style_nom"));
                vente.setCategorie_nom(rs.getString("categorie_nom"));
-               vente.setPrix_vente(rs.getDouble("prix_vente"));
+               vente.setPrix_vente(rs.getString("prix_vente"));
+               ventes.add(vente);
               
             }
         } finally {
@@ -150,16 +151,17 @@ public class VenteStat {
             while (rs.next()) {
                VenteStat vente = new VenteStat();
               
-               vente.setMeuble_id(rs.getInt("meuble_id"));
-               vente.setGenre_id(rs.getInt("genre_id"));
-               vente.setTaille(rs.getInt("taille"));
-               vente.setQuantite(rs.getInt("quantite"));
-               vente.setCategorie_id(rs.getInt("categorie_id"));
-               vente.setStyle_id(rs.getInt("style_id"));
+               vente.setMeuble_id(rs.getString("meuble_id"));
+               vente.setGenre_id(rs.getString("genre_id"));
+               vente.setTaille(rs.getString("taille"));
+               vente.setQuantite(rs.getString("quantite"));
+               vente.setCategorie_id(rs.getString("categorie_id"));
+               vente.setStyle_id(rs.getString("style_id"));
                vente.setStyle_nom(rs.getString("style_nom"));
                vente.setCategorie_nom(rs.getString("categorie_nom"));
-               vente.setPrix_vente(rs.getDouble("prix_vente"));
+               vente.setPrix_vente(rs.getString("prix_vente"));
               
+               ventes.add(vente);
             }
         } finally {
             if (!wasConnected) {

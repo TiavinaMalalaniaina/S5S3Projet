@@ -26,8 +26,8 @@ public class Client {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String id) {
+        this.id = Integer.parseInt(id);
     }
 
     public String getNom() {
@@ -42,8 +42,8 @@ public class Client {
         return genre_id;
     }
 
-    public void setGenre_id(int genre_id) {
-        this.genre_id = genre_id;
+    public void setGenre_id(String genre_id) {
+        this.genre_id = Integer.parseInt(genre_id);
     }
     
       public void save(Connection connection) throws SQLException {
@@ -59,7 +59,7 @@ public class Client {
             stmt.setInt(2,this.getGenre_id());
             
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) this.setId(rs.getInt("id"));
+            if (rs.next()) this.setId(rs.getString("id"));
         } finally {
             if (!wasConnected) {
                 connection.close();
@@ -81,9 +81,9 @@ public class Client {
             while (rs.next()) {
                 Client client = new Client();
               
-                client.setId(rs.getInt("id"));
+                client.setId(rs.getString("id"));
                 client.setNom(rs.getString("nom"));
-                client.setGenre_id(rs.getInt("genre_id"));
+                client.setGenre_id(rs.getString("genre_id"));
                 clients.add(client);
             }
         } finally {
