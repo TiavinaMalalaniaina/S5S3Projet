@@ -44,7 +44,7 @@ public class Materiel {
     }
 
     public void setNom(String nom) throws Exception {
-        if (nom.equals("")) throw new Exception("Nom ne peut pas être vide");
+        if (nom.trim().equals("")) throw new Exception("Nom ne peut pas être vide");
         this.nom = nom;
     }
 

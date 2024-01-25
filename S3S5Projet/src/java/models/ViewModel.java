@@ -22,10 +22,12 @@ public class ViewModel {
     public List<Style> styles = new ArrayList<>();
     public List<Categorie> categories = new ArrayList<>();
     public List<Meuble> meubles = new ArrayList<>();
+    public List<VenteStat> venteStat = new ArrayList<>();
     public List<TypeEmploye> typeEmployes = new ArrayList<>();
     public List<Employe> employes = new ArrayList<>();
     public int meubleId = 0;
     public List<Grade> grades = new ArrayList<>();
+    public List<Client> clients = new ArrayList<>();
     
     String error;
     

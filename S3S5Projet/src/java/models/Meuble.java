@@ -33,9 +33,7 @@ public class Meuble {
     double benefice_petit;
     double benefice_grand;
 
-    public Meuble() {
-       
-    }
+    public Meuble() {}
 
     public double getPrix_petit() {
         return prix_petit;
@@ -105,7 +103,7 @@ public class Meuble {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "SELECT * FROM v_meuble ";
+        String sql = "SELECT * FROM v_meuble";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();

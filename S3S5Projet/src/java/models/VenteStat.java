@@ -175,6 +175,7 @@ public class VenteStat {
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
+            System.out.println(stmt);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                VenteStat vente = new VenteStat();
@@ -188,8 +189,7 @@ public class VenteStat {
                vente.setStyle_nom(rs.getString("style_nom"));
                vente.setCategorie_nom(rs.getString("categorie_nom"));
                vente.setPrix_vente(rs.getString("prix_vente"));
-              
-               ventes.add(vente);
+              ventes.add(vente);
             }
         } finally {
             if (!wasConnected) {
