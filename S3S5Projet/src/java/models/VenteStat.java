@@ -33,7 +33,11 @@ public class VenteStat {
     }
 
     public void setMeuble_id(String meuble_id) {
-        this.meuble_id = Integer.parseInt(style_nom);
+        this.setMeuble_id(Integer.parseInt(meuble_id));
+    }
+    
+    public void setMeuble_id(int meuble_id) {
+        this.meuble_id = meuble_id;
     }
 
     public int getGenre_id() {
@@ -43,21 +47,35 @@ public class VenteStat {
     public void setGenre_id(String genre_id) {
         this.genre_id = Integer.parseInt(genre_id);
     }
+    
+    public void setGenre_id(int genre_id) {
+        this.genre_id=genre_id;
+    }
+    
 
     public int getTaille() {
         return taille;
     }
 
     public void setTaille(String taille) {
-        this.taille = Integer.parseInt(taille);
+        this.setTaille(Integer.parseInt(taille));
+    }
+    
+    public void setTaille(int taille) {
+        this.taille = taille;
     }
 
     public int getQuantite() {
         return quantite;
     }
 
-    public void setQuantite(String quantite) {
-        this.quantite = Integer.parseInt(quantite);
+    public void setQuantite(String quantite) throws Exception {
+        this.setQuantite(Integer.parseInt(quantite));
+    }
+    
+    public void setQuantite(int quantite) throws Exception {
+        if (quantite<0) throw new Exception("La quantite ne peut etre negatif");
+        this.quantite = quantite;
     }
 
     public int getCategorie_id() {
@@ -65,7 +83,7 @@ public class VenteStat {
     }
 
     public void setCategorie_id(String categorie_id) {
-        this.categorie_id = Integer.parseInt(style_nom);
+        this.categorie_id = Integer.parseInt(categorie_id);
     }
 
     public int getStyle_id() {
@@ -97,7 +115,7 @@ public class VenteStat {
     }
 
     public void setPrix_vente(String prix_vente) {
-        this.prix_vente = Double.parseDouble(style_nom);
+        this.prix_vente = Double.parseDouble(prix_vente);
     }
     
    
@@ -143,7 +161,7 @@ public class VenteStat {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "SELECT * FROM v_vente_stat_all";
+        String sql = "SELECT * FROM v_vente_stat_all ORDER BY genre_id";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
@@ -171,7 +189,7 @@ public class VenteStat {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
-        String sql = "SELECT * FROM v_vente_stat_genre_detailled where meuble_id = ?";
+        String sql = "SELECT * FROM v_vente_stat_genre_detailled where meuble_id = ? ORDER BY genre_id";
         
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);

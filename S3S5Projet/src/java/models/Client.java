@@ -35,6 +35,7 @@ public class Client {
     }
 
     public void setNom(String nom) {
+        if (nom.trim().equals("")) throw new Exception("Le nom est vide");
         this.nom = nom;
     }
 

@@ -8,23 +8,24 @@
 <%
     ViewModel model = (ViewModel) request.getAttribute("model");
 %>
-
+<a href="StatVente?meubleId=0">
+    <button class="btn btn-primary"> Tous</button>
+</a>
 <form method="GET" action="StatVente">
     <div class="form-group">
-        <select name="type" class=" form-control" id="id_label_single">
+        <select name="meubleId" class=" form-control" id="id_label_single">
             <% for(Meuble m : model.meubles){ %>
              <option value="<%= m.getId() %>"><%= m.getCategorieNom() %> <%= m.getStyleNom() %></option>
             <%  } %> 
         </select>
     </div>
+    <button type="submit" class="btn btn-primary">Valider</button>
+</form>
+        
     <div style="width: 80%; margin: auto;">
         <canvas id="myPieChart"></canvas>
     </div>
-    <button type="submit" class="btn btn-primary">Valider</button>
-</form>
-        <a href="StatVente?meubleId=0">
-            <button class="btn btn-primary"> Tous</button>
-        </a>
+        
         
 <script>
 var ctx = document.getElementById('myPieChart').getContext('2d');
@@ -38,7 +39,7 @@ const dataPie = [
 
 
 var data = {
-    labels: ['Part 1', 'Part 2'],
+    labels: ['Homme', 'Femme'],
     datasets: [{
         data: dataPie,
         backgroundColor: ['red', 'yellow']

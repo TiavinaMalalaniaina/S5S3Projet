@@ -53,7 +53,7 @@ public class StatVenteServlet extends HttpServlet {
             RequestDispatcher dispatch = request.getRequestDispatcher("home.jsp");
             dispatch.forward(request, response);
         } catch (Exception ex) {
-            
+            ex.printStackTrace();
         }
     }
 

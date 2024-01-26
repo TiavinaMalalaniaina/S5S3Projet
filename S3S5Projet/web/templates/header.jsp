@@ -74,7 +74,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#vente" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">EMPLOYE</a>
+                <a href="#vente" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">VENTE</a>
                 <ul class="collapse list-unstyled" id="vente">
                      <li>
                         <a href="FormClient">Ajout de client</a>
@@ -83,7 +83,7 @@
                         <a href="FormVente">Ajout de vente</a>
                     </li>
                      <li>
-                        <a href="StatVente">Stat</a>
+                        <a href="StatVente?meubleId=0">Stat</a>
                     </li>
                 </ul>
             </li>
