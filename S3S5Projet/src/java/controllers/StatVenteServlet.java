@@ -43,8 +43,14 @@ public class StatVenteServlet extends HttpServlet {
             meubleId = Integer.parseInt(meubleIdStr);
             ViewModel model = new ViewModel();
             model.meubles = Meuble.findAll(null);
-            if (meubleId == 0) model.venteStat = VenteStat.findVenteStat(null);
-            else    model.venteStat = VenteStat.findByMeubleId(null, meubleId);
+            if (meubleId == 0) {
+                model.venteStat = VenteStat.findVenteStat(null);
+                model.venteStatAll = VenteStat.findByMeubleId(null);
+            }
+            else    {
+                model.venteStat = VenteStat.findByMeubleId(null, meubleId);
+                model.venteStatAll = VenteStat.findByMeubleId(null, meubleId);
+            }
             model.setError(request.getParameter("error"));
             request.setAttribute("viewName", "components/statVente.jsp");
             request.setAttribute("title", "VENTE");

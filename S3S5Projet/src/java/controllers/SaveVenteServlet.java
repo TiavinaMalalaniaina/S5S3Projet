@@ -7,6 +7,8 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -14,7 +16,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Meuble;
+import models.MeubleStock;
 import models.Vente;
+import util.DBConnection;
 
 /**
  *
@@ -36,22 +41,52 @@ public class SaveVenteServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            String meubleId = request.getParameter("meubleId");
-            String clientId = request.getParameter("clientId");
-            String quantite = request.getParameter("quantite");
-            String taille = request.getParameter("taille");
-            
-            Vente vente = new Vente();
-            vente.setMeuble_id(meubleId);
-            vente.setClient_id(clientId);
-            vente.setQuantite(quantite);
-            vente.setTaille(taille);
-            vente.save(null);
-            
-            response.sendRedirect("FormVente");
-        } catch (Exception ex) {
-            Logger.getLogger(SaveMeubleEmployeServlet.class.getName()).log(Level.SEVERE, null, ex);
-            response.sendRedirect("FormVente?error=" + ex.getMessage());
+            Connection connection = DBConnection.getConnection();
+        
+
+            try {
+                String meubleId = request.getParameter("meubleId");
+                String clientId = request.getParameter("clientId");
+                String quantite = request.getParameter("quantite");
+                String taille = request.getParameter("taille");
+
+                connection.setAutoCommit(false);
+                Vente vente = new Vente();
+                vente.setMeuble_id(meubleId);
+                vente.setClient_id(clientId);
+                vente.setQuantite(quantite);
+                vente.setTaille(taille);
+                vente.save(connection);
+                MeubleStock meubleStock = new MeubleStock();
+                meubleStock.setMeuble_id(meubleId);
+                Meuble meuble = Meuble.findWithQuantite(Integer.parseInt(meubleId), connection);
+                int quantite_i = Integer.parseInt(quantite);
+                switch (Integer.parseInt(taille)) {
+                    case 1:
+                        if (meuble.getPetit() < quantite_i) throw new Exception("Quantite insuffisante");
+                        meubleStock.setQuantite_petit(-quantite_i);
+                        meubleStock.setQuantite_grand(0);
+                        break;
+                    case 2:
+                        if (meuble.getGrand() < quantite_i) throw new Exception("Quantite insuffisante");
+                        meubleStock.setQuantite_petit(0);
+                        meubleStock.setQuantite_grand(-quantite_i);
+                        break;
+                    default:
+                        throw new Exception("Taille non définie");
+                }
+                meubleStock.save(null);
+                connection.commit();
+                connection.close();
+                response.sendRedirect("FormVente");
+            } catch (Exception ex) {
+                connection.rollback();
+                connection.close();
+                Logger.getLogger(SaveMeubleEmployeServlet.class.getName()).log(Level.SEVERE, null, ex);
+                response.sendRedirect("FormVente?error=" + ex.getMessage());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

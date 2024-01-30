@@ -136,7 +136,6 @@ public class VenteStat {
               
                vente.setMeuble_id(rs.getString("meuble_id"));
                vente.setGenre_id(rs.getString("genre_id"));
-               vente.setTaille(rs.getString("taille"));
                vente.setQuantite(rs.getString("quantite"));
                vente.setCategorie_id(rs.getString("categorie_id"));
                vente.setStyle_id(rs.getString("style_id"));
@@ -182,7 +181,7 @@ public class VenteStat {
         return ventes;
     }
       
-        public static List<VenteStat> findByMeubleId(Connection connection,int id) throws SQLException, Exception {
+    public static List<VenteStat> findByMeubleId(Connection connection,int id) throws SQLException, Exception {
         List<VenteStat> ventes = new ArrayList<>();
         boolean wasConnected = true;
         if (connection == null) {
@@ -200,7 +199,38 @@ public class VenteStat {
               
                vente.setMeuble_id(rs.getString("meuble_id"));
                vente.setGenre_id(rs.getString("genre_id"));
-               vente.setTaille(rs.getString("taille"));
+               vente.setQuantite(rs.getString("quantite"));
+               vente.setCategorie_id(rs.getString("categorie_id"));
+               vente.setStyle_id(rs.getString("style_id"));
+               vente.setStyle_nom(rs.getString("style_nom"));
+               vente.setCategorie_nom(rs.getString("categorie_nom"));
+               vente.setPrix_vente(rs.getString("prix_vente"));
+              ventes.add(vente);
+            }
+        } finally {
+            if (!wasConnected) {
+                connection.close();
+            }
+        } 
+        return ventes;
+    }
+    
+    public static List<VenteStat> findByMeubleId(Connection connection) throws SQLException, Exception {
+        List<VenteStat> ventes = new ArrayList<>();
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = DBConnection.getConnection();
+        }
+        String sql = "SELECT * FROM v_vente_stat_genre_detailled ORDER BY genre_id";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+               VenteStat vente = new VenteStat();
+              
+               vente.setMeuble_id(rs.getString("meuble_id"));
+               vente.setGenre_id(rs.getString("genre_id"));
                vente.setQuantite(rs.getString("quantite"));
                vente.setCategorie_id(rs.getString("categorie_id"));
                vente.setStyle_id(rs.getString("style_id"));

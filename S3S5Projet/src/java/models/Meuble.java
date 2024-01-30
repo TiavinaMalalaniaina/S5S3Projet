@@ -186,15 +186,15 @@ public class Meuble {
      }
      
      
-        public List<Meuble> findAllWithQuantite(Connection connection) throws Exception{
-            List<Meuble> models = new ArrayList<>();
+    public List<Meuble> findAllWithQuantite(Connection connection) throws Exception{
+        List<Meuble> models = new ArrayList<>();
         boolean wasConnected = true;
         if (connection == null) {
             wasConnected = false;
             connection = DBConnection.getConnection();
         }
         String sql = "SELECT * FROM v_meuble_stock";
-        
+
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -212,7 +212,35 @@ public class Meuble {
             }
         } 
         return models;
-       }
+    }
+    
+    public static Meuble findWithQuantite(int meubleId, Connection connection) throws Exception{
+        Meuble model = null;
+        boolean wasConnected = true;
+        if (connection == null) {
+            wasConnected = false;
+            connection = DBConnection.getConnection();
+        }
+        String sql = "SELECT * FROM v_meuble_stock WHERE meuble_id=?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, meubleId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                model = new Meuble();
+                model.setId(rs.getInt("meuble_id"));
+                model.setStyleNom(rs.getString("style_nom"));
+                model.setCategorieNom(rs.getString("categorie_nom"));
+                model.setPetit(rs.getDouble("quantite_petit"));
+                model.setGrand(rs.getDouble("quantite_grand"));
+            }
+        } finally {
+            if (!wasConnected) {
+                connection.close();
+            }
+        } 
+        return model;
+    }
        
        
      public static List<Meuble> findByPrix(Connection connection,double prix_min,double prix_max) throws SQLException {

@@ -71,6 +71,10 @@ public class MeubleStock {
     public void setQuantite_grand(String quantite) {
         this.setQuantite_grand(Double.parseDouble(quantite));
     }
+    
+    public MeubleStock() {
+        
+    }
 
     public MeubleStock(int meuble_id, double quantite_petit, double quantite_grand) {
         this.meuble_id = meuble_id;
